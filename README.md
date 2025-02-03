@@ -22,7 +22,6 @@ Getting Started
    - First, clone the repository and navigate to the project root:
      ```bash
      git clone [repository-url]
-     cd ai-test-generator
      ```
    - Create a virtual environment:
      ```bash
