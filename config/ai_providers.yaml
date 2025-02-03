@@ -1,0 +1,16 @@
+# ai-test-generator/config/ai_providers.yaml
+
+openai:
+  api_key_env_var: "OPENAI_API_KEY"
+  default_model: "gpt-3.5-turbo"
+  endpoint: "https://api.openai.com/v1/chat/completions"
+
+gemini:
+  api_key_env_var: "GEMINI_API_KEY"
+  default_model: "gemini-model"
+  endpoint: "https://api.gemini.example.com/v1/complete"
+
+huggingface:
+  default_model: "gpt2"
+  endpoint: "https://api-inference.huggingface.co/models"
+  # Optionally, you could add authentication details if needed.

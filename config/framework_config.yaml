@@ -1,0 +1,16 @@
+# ai-test-generator/config/framework_config.yaml
+
+pytest:
+  command: "pytest"
+  test_directory: "tests"
+  options: "--maxfail=1 --disable-warnings"
+
+jest:
+  command: "jest"
+  test_directory: "__tests__"
+  options: "--verbose"
+
+postman:
+  collection_format: "json"
+  environment_format: "json"
+  # Additional settings for Postman collections can be added here.

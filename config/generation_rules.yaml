@@ -1,0 +1,11 @@
+# ai-test-generator/config/generation_rules.yaml
+
+indentation: 4           # Number of spaces for indentation.
+line_length: 120         # Maximum line length.
+naming_convention:
+  test_case: "snake_case"
+  test_suite: "camelCase"
+default_timeout: 30      # Default timeout in seconds for tests.
+additional_rules:
+  include_comments: true # Whether to include comments in the generated tests.
+  use_assertions: true   # Whether to enforce assertions in tests.

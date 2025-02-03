@@ -1,0 +1,19 @@
+# Use a lightweight Python image
+FROM python:3.8-slim
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy the requirements file and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose any necessary port (if your generated tests or application run a server)
+EXPOSE 8000
+
+# Define the default command to run the CLI tool.
+# Customize the arguments as needed.
+CMD ["python", "-m", "interfaces.cli", "--spec", "./user_inputs/api_specs/petstore.yaml", "--test-types", "functional", "security", "--framework", "pytest", "--output-dir", "artifacts/generated_tests"]

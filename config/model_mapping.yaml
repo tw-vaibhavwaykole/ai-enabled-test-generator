@@ -1,0 +1,17 @@
+# ai-test-generator/config/model_mapping.yaml
+
+functional:
+  adapter: "openai"
+  generator: "functional_test_generator"
+
+security:
+  adapter: "openai"
+  generator: "security_test_generator"
+
+performance:
+  adapter: "huggingface"
+  generator: "performance_test_generator"
+
+e2e:
+  adapter: "huggingface"
+  generator: "e2e_test_generator"

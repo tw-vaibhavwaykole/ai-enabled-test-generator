@@ -1,0 +1,13 @@
+version: "3.8"
+services:
+  ai-test-generator:
+    build: .
+    container_name: ai-test-generator
+    ports:
+      - "8000:8000"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+    volumes:
+      - .:/app
+    command: python -m interfaces.cli --spec ./user_inputs/api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
