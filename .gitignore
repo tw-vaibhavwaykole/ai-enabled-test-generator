@@ -1,45 +1,30 @@
-# Byte-compiled / optimized / DLL files
+# Python
 __pycache__/
 *.py[cod]
 *$py.class
-
-# Distribution / packaging
+*.so
 .Python
-build/
-develop-eggs/
-dist/
-downloads/
-eggs/
-.eggs/
-lib/
-lib64/
-parts/
-sdist/
-var/
-*.egg-info/
-.installed.cfg
-*.egg
-
-# Virtual environment
-env/
 venv/
 ENV/
-env.bak/
-venv.bak/
 
-# Environment variables file
+# Environment variables
 .env
 
-# Logs and reports
-*.log
-audit.log
-
-# Artifacts directories (if you want to keep them clean on repo clone)
-ai-test-generator/artifacts/reports/
-ai-test-generator/artifacts/tests/
-
-# IDE and editor files
-.vscode/
+# IDE
 .idea/
-*.sublime-project
-*.sublime-workspace
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+artifacts/generated_tests/
+artifacts/reports/
+!artifacts/reports/README.md
+
+# Logs
+*.log
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/ 

@@ -1,0 +1,23 @@
+# AI-Enabled Test Generator Requirements
+
+# AI Adapters
+openai>=1.0.0
+transformers>=4.0.0
+google-generativeai>=0.3.0
+
+# OpenAPI Validation
+openapi-spec-validator>=0.4.0
+
+# YAML Processing
+PyYAML>=6.0.0
+
+# Template Rendering
+Jinja2>=3.0
+
+# Testing Framework (for running unit tests)
+pytest>=7.0.0
+python-dotenv>=1.0.0
+pyyaml>=6.0.0
+requests>=2.31.0
+fastapi>=0.100.0
+uvicorn>=0.23.0

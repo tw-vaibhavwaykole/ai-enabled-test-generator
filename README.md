@@ -16,18 +16,60 @@ Features
 
 Getting Started
 ---------------
-1. Install Dependencies:
-   Run the following command to install the required packages:
-       pip install -r requirements.txt
+**Option 1: Local Environment Setup with Python Virtual Environment**
 
-2. Set Up Environment Variables:
-   Create a `.env` file in the project root with your API keys:
-       OPENAI_API_KEY=your_openai_api_key
-       GEMINI_API_KEY=your_gemini_api_key
+1. **Create a Python Virtual Environment:**
+   - First, clone the repository and navigate to the project root:
+     ```bash
+     git clone [repository-url]
+     cd ai-test-generator
+     ```
+   - Create a virtual environment:
+     ```bash
+     python3 -m venv venv
+     ```
+   - Activate the virtual environment:
+     - On macOS/Linux:
+       ```bash
+       source venv/bin/activate
+       ```
+     - On Windows:
+       ```bash
+       venv\Scripts\activate
+       ```
 
-3. Run the Test Generator:
-   Execute the following command from the project root:
-       python -m interfaces.cli --spec ./user_inputs/api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+2. **Install Dependencies:**
+   - With the virtual environment activated, install the required packages:
+     ```bash
+     pip3 install -r requirements.txt
+     ```
+   - Note: If you encounter any issues, ensure you're in the project root directory where `requirements.txt` is located.
+
+3. **Set Up Environment Variables:**
+   - Create a `.env` file in the project root with your API keys:
+     ```bash
+     OPENAI_API_KEY=your_openai_api_key
+     GEMINI_API_KEY=your_gemini_api_key
+     ```
+
+4. **Run the Test Generator:**
+   - Execute the following command from the project root:
+     ```bash
+     python3 -m interfaces.cli --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+     ```
+
+**Option 2: Running with Docker Compose**
+
+1. **Ensure Docker and Docker Compose are Installed:**
+   - Make sure Docker and Docker Compose are installed on your system.
+
+2. **Build and Run the Application:**
+   - From the project root, run:
+     ```bash
+     docker-compose up --build
+     ```
+   - This command uses the `docker-compose.yml` file (located in the project root) to set up the application container,
+     install dependencies, and run the test generator according to the configuration in the Compose file.
 
 Documentation
 -------------
@@ -37,7 +79,8 @@ Documentation
 Docker & CI/CD
 --------------
 This project includes a Dockerfile, a Docker Compose configuration, and GitHub Actions workflows for continuous integration.
-Refer to the respective files in the project root and .github/workflows/ for more details.
+- **Docker Compose:** Refer to the `docker-compose.yml` file in the project root for the complete configuration.
+- **CI/CD Workflows:** Check the files in the `.github/workflows/` directory for GitHub Actions setups.
 
 License
 -------
