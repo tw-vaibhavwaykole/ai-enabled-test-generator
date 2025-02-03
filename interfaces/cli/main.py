@@ -8,10 +8,14 @@ import os
 import sys
 import logging
 import yaml
+from dotenv import load_dotenv
 
 from ai_engine.orchestrator import Orchestrator
 from ai_engine.adapters.openai_adapter import OpenAIAdapter
 from utils.config_loader import load_config
+
+# Load environment variables before anything else
+load_dotenv()
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description="AI Enabled Test Generator CLI")
@@ -34,11 +38,16 @@ def parse_arguments():
     return parser.parse_args()
 
 def main():
+    # Check for required environment variables first
+    if not os.getenv("OPENAI_API_KEY"):
+        logging.error("OPENAI_API_KEY environment variable is not set. Please set it in your .env file.")
+        sys.exit(1)
+
     args = parse_arguments()
 
     # Load a global configuration (if needed)
     try:
-        framework_config = load_config("ai-test-generator/config/framework_config.yaml")
+        framework_config = load_config("config/framework_config.yaml")
     except Exception as e:
         logging.error(f"Failed to load framework configuration: {e}")
         framework_config = {}
