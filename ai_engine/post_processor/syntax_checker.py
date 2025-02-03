@@ -12,8 +12,11 @@ def check_syntax(test_code: str) -> bool:
         raise ValueError("Test code is empty or not a string.")
 
     try:
-        compile(test_code, "<string>", "exec")
+        # Add wrapper to make partial code fragments compilable
+        wrapped_code = f"def __wrapper__():\n    {test_code.replace('\n', '\n    ')}"
+        compile(wrapped_code, "<string>", "exec")
     except Exception as e:
-        raise SyntaxError(f"Syntax error in test code: {e}")
+        error_msg = f"Syntax error in test code:\n{'-'*40}\n{test_code}\n{'-'*40}\nError: {e}"
+        raise SyntaxError(error_msg)
 
     return True

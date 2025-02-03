@@ -5,9 +5,14 @@ services:
     container_name: ai-test-generator
     ports:
       - "8000:8000"
+      - "8080:8080"  # Port for Allure reports
     environment:
       - OPENAI_API_KEY=${OPENAI_API_KEY}
       - GEMINI_API_KEY=${GEMINI_API_KEY}
     volumes:
       - .:/app
-    command: python -m interfaces.cli --spec ./user_inputs/api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+      - allure-results:/app/allure-results
+    command: sh -c "python -m interfaces.cli --spec ./user_inputs/api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests && pytest artifacts/generated_tests --alluredir=./allure-results && allure serve ./allure-results"
+
+volumes:
+  allure-results:

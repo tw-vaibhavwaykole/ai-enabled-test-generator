@@ -21,3 +21,7 @@ pyyaml>=6.0.1
 requests>=2.31.0
 fastapi>=0.100.0
 uvicorn>=0.23.0
+
+# Allure support
+allure-pytest==2.13.2
+allure-python-commons==2.13.2

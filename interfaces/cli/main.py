@@ -9,6 +9,7 @@ import sys
 import logging
 import yaml
 from dotenv import load_dotenv
+import shutil
 
 from ai_engine.orchestrator import Orchestrator
 from ai_engine.adapters.openai_adapter import OpenAIAdapter
@@ -37,6 +38,18 @@ def parse_arguments():
     )
     return parser.parse_args()
 
+def clean_output_directory(output_dir: str) -> None:
+    """
+    Clean up the output directory by removing it and recreating it.
+    
+    :param output_dir: Path to the output directory
+    """
+    if os.path.exists(output_dir):
+        logging.info(f"Cleaning up existing output directory: {output_dir}")
+        shutil.rmtree(output_dir)
+    os.makedirs(output_dir, exist_ok=True)
+    logging.info(f"Created fresh output directory: {output_dir}")
+
 def main():
     # Check for required environment variables first
     if not os.getenv("OPENAI_API_KEY"):
@@ -44,6 +57,9 @@ def main():
         sys.exit(1)
 
     args = parse_arguments()
+
+    # Clean up output directory before generating new tests
+    clean_output_directory(args.output_dir)
 
     # Load a global configuration (if needed)
     try:
@@ -74,22 +90,25 @@ def main():
     orchestrator = Orchestrator(adapter, unified_spec)
     results = orchestrator.run(args.test_types)
 
-    # Ensure the output directory exists
-    os.makedirs(args.output_dir, exist_ok=True)
-    output_file = os.path.join(args.output_dir, "generated_tests.txt")
+    # Save the tests to separate files
+    for filename, test_code in results["test_files"].items():
+        output_path = os.path.join(args.output_dir, filename)
+        with open(output_path, "w") as f:
+            # Add common imports and fixtures to each file
+            f.write("""import pytest
+import requests
 
-    # Write the aggregated test suites to the output file
-    try:
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write("Generated Test Suites:\n")
-            for test_type, suite in results.items():
-                f.write(f"\n--- {test_type.upper()} TESTS ---\n")
-                f.write(str(suite))
-                f.write("\n")
-        print(f"Generated tests saved to {output_file}")
-    except Exception as e:
-        logging.error(f"Failed to write output: {e}")
-        sys.exit(1)
+@pytest.fixture
+def base_url():
+    return 'http://localhost:8080/api'
+
+@pytest.fixture
+def headers():
+    return {'Content-Type': 'application/json'}\n\n""")
+            
+            f.write(test_code)
+        
+        logging.info(f"Generated {filename} in {args.output_dir}")
 
 if __name__ == "__main__":
     main()

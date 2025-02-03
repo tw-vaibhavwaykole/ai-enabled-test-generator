@@ -51,15 +51,13 @@ Getting Started
      GEMINI_API_KEY=your_gemini_api_key
      ```
 
-4. **Run the Test Generator:**
+4. **Run the Test Generator with Allure Reporting:**
    ```bash
-   # Recommended: Run as a module
+   # Generate and run tests with Allure reporting
    python3 -m interfaces.cli --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
-
-   # Alternative: Run directly (not recommended)
-   python3 interfaces/cli/main.py --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+   pytest artifacts/generated_tests --alluredir=./allure-results
+   allure serve ./allure-results
    ```
-   The module execution pattern (`python3 -m`) is recommended as it provides better package import handling and cross-platform compatibility.
 
 **Option 2: Running with Docker Compose**
 
@@ -88,3 +86,29 @@ This project includes a Dockerfile, a Docker Compose configuration, and GitHub A
 License
 -------
 [Specify your license here]
+
+Test Reporting
+-------------
+This project uses Allure for test reporting. To view the reports:
+
+1. **Install Allure:**
+   - On macOS: `brew install allure`
+   - On Linux: 
+     ```bash
+     wget https://github.com/allure-framework/allure2/releases/download/2.24.1/allure-2.24.1.tgz
+     sudo tar -zxvf allure-2.24.1.tgz -C /opt/
+     sudo ln -s /opt/allure-2.24.1/bin/allure /usr/bin/allure
+     ```
+   - On Windows: `scoop install allure`
+
+2. **Generate and View Reports:**
+   ```bash
+   pytest --alluredir=./allure-results
+   allure serve ./allure-results
+   ```
+
+The Allure report will open in your default web browser, showing detailed test results, including:
+- Test execution statistics
+- Test steps and attachments
+- Failed test analysis
+- Environment information

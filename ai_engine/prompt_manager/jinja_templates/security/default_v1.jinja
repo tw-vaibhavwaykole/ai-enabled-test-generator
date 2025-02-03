@@ -1,3 +1,12 @@
 # Security Test Template v1
 Generate security tests for the following specification:
 {{ spec | tojson }}
+
+Example format:
+@pytest.fixture
+def base_url():
+    return 'http://localhost:8080/api'
+
+def test_unauthorized_access(base_url):
+    \"\"\"Test unauthorized access\"\"\"
+    response = requests.get(f'{{base_url}}/endpoint')

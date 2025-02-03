@@ -50,6 +50,7 @@ class Orchestrator:
         :return: A dictionary with the processed test suites for each test type.
         """
         results = {}
+        test_files = {}
 
         for test_type in test_types:
             generator_class = self.generator_mapping.get(test_type)
@@ -64,6 +65,11 @@ class Orchestrator:
 
             # Post processing: Syntax check, spec compliance, and security scan
             test_code = test_suite.get("generated_tests", "")
+            
+            if test_code:
+                # Store test code with type-specific filename
+                filename = self._get_filename_for_type(test_type)
+                test_files[filename] = test_code
 
             # Syntax Check
             try:
@@ -94,7 +100,18 @@ class Orchestrator:
 
             results[test_type] = test_suite
 
+        results["test_files"] = test_files
         return results
+
+    def _get_filename_for_type(self, test_type: str) -> str:
+        """Map test types to filenames"""
+        filenames = {
+            "functional": "functional_api_tests.py",
+            "security": "security_tests.py",
+            "performance": "performance_tests.py",
+            "e2e": "e2e_tests.py"
+        }
+        return filenames.get(test_type, f"{test_type}_tests.py")
 
 # Standalone demo when running orchestrator.py directly.
 if __name__ == "__main__":

@@ -1,3 +1,22 @@
 # Functional Test Template v1
-Generate functional tests for the following specification:
+Generate pytest-compatible functional tests for the following specification.
+Include complete test functions with proper assertions.
+
+Specification:
 {{ spec | tojson }}
+
+Requirements:
+- Use Python 3.8+ syntax
+- Each test function must start with 'test_'
+- Include docstrings explaining the test purpose
+- Validate both success and error cases
+- Use pytest fixtures where appropriate
+
+Example format:
+@pytest.fixture
+def base_url():
+    return 'http://localhost:8080/api'
+
+def test_example(base_url):  # Use base_url fixture
+    \"\"\"Test description\"\"\"
+    response = requests.get(f'{{base_url}}/endpoint')
