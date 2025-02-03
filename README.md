@@ -52,10 +52,14 @@ Getting Started
      ```
 
 4. **Run the Test Generator:**
-   - Execute the following command from the project root:
-     ```bash
-     python3 -m interfaces.cli --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
-     ```
+   ```bash
+   # Recommended: Run as a module
+   python3 -m interfaces.cli --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+
+   # Alternative: Run directly (not recommended)
+   python3 interfaces/cli/main.py --spec ./api_specs/petstore.yaml --test-types functional security --framework pytest --output-dir artifacts/generated_tests
+   ```
+   The module execution pattern (`python3 -m`) is recommended as it provides better package import handling and cross-platform compatibility.
 
 **Option 2: Running with Docker Compose**
 

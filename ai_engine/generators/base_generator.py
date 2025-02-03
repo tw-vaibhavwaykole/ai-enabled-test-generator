@@ -1,5 +1,6 @@
 # ai-test-generator/ai_engine/generators/base_generator.py
 
+from typing import Dict, List
 from abc import ABC, abstractmethod
 
 class BaseGenerator(ABC):
@@ -15,6 +16,7 @@ class BaseGenerator(ABC):
         """
         self.adapter = adapter
         self.prompt_template = prompt_template
+        self.test_type = None
 
     @abstractmethod
     def generate(self, unified_spec: dict, **kwargs):
@@ -25,6 +27,11 @@ class BaseGenerator(ABC):
         :param kwargs: Additional parameters for test generation.
         :return: A structured test suite or list of test cases.
         """
+        pass
+
+    @abstractmethod
+    def validate(self, tests: List[Dict]) -> bool:
+        """Validate the generated tests"""
         pass
 
     def _compose_prompt(self, unified_spec: dict) -> str:
