@@ -17,7 +17,6 @@ ENV/
 *.swo
 
 # Project specific
-artifacts/generated_tests/
 artifacts/reports/
 !artifacts/reports/README.md
 
