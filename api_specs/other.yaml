@@ -1,0 +1,4246 @@
+components:
+  schemas:
+    ApiError:
+      properties:
+        error:
+          description: HTTP status message
+          type: string
+        exception:
+          description: Fully qualified exception type
+          type: string
+        message:
+          description: Exception / error message
+          type: string
+        path:
+          type: string
+        status:
+          description: HTTP status code for the error
+          format: int32
+          type: integer
+        timestamp:
+          description: Date and time the error occurred
+          format: date-time
+          type: string
+      required:
+      - error
+      - message
+      - status
+      - timestamp
+      type: object
+    BaseIntegrationConfig:
+      properties:
+        activityDataPresendSanityCheckEnabled:
+          type: boolean
+        adjustIdpSoldsUsingSkewingFactor:
+          type: boolean
+        adjustReservationNetRates:
+          type: string
+        allowBookingAndCancellationDateUpdates:
+          type: boolean
+        allowOverrideBookedRoomType:
+          type: boolean
+        allowZeroValuesInSummaryStats:
+          type: boolean
+        alternateHTNGGroupsFlow:
+          type: boolean
+        alternateHTNGNamespace:
+          type: boolean
+        autoCancellationOfReservationsForAgentEnabled:
+          type: boolean
+        baseCurrencyCode:
+          type: string
+        buildMSActivityUsingPMSMS:
+          type: boolean
+        bypassFilterOnPseudoRoomTypes:
+          type: boolean
+        cdpFutureDays:
+          format: int32
+          type: integer
+        cdpPastDays:
+          format: int32
+          type: integer
+        checkVirtualSuitesComponentRooms:
+          type: boolean
+        combineOldMarketSegmentData:
+          type: boolean
+        componentRoomsActivityEnabled:
+          type: boolean
+        createDate:
+          format: date-time
+          type: string
+        dailyBarCurrencyCode:
+          type: string
+        dailyBarRateCode:
+          type: string
+        decisionDeliveryMonitorDelay:
+          format: int32
+          type: integer
+        decisionUploadChunkSize:
+          format: int32
+          type: integer
+        decisionsThreshold:
+          format: int32
+          type: integer
+        defaultGroupMarketSegmentCode:
+          type: string
+        defaultMarketSegmentCode:
+          type: string
+        defaultRoomType:
+          type: string
+        disableMixedExchangeRates:
+          type: boolean
+        discontinuedMarketSegments:
+          items:
+            type: string
+          type: array
+        doNotCorrelateInventoriesInIdp:
+          type: boolean
+        enableNucleusExchangeRates:
+          type: boolean
+        enableOhipReservationEntityV2:
+          type: boolean
+        excludeFromUnmappedGroupRateCodesRegexp:
+          type: string
+        excludeSemiyieldableRateAdjustments:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValue:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValueForGroupData:
+          type: boolean
+        extendedAttributes:
+          additionalProperties:
+            type: object
+          type: object
+        extendedStay:
+          type: boolean
+        failIncompleteInventory:
+          type: boolean
+        feedRequestDelay:
+          format: int32
+          type: integer
+        filterReservationsByExternalReferences:
+          type: boolean
+        folsRoomStayReservationByDay:
+          type: boolean
+        folsUseCloudProcessing:
+          type: boolean
+        generateHotelActivityFromRoomTypeActivity:
+          type: boolean
+        generateMarketSegmentStatsEnabled:
+          type: boolean
+        generateRateCodeStatsEnabled:
+          type: boolean
+        groupBlockPurgingBeyondPurgeDateEnabled:
+          type: boolean
+        groupPastDays:
+          format: int32
+          type: integer
+        handleDayUseToNonDayUseReservationConversion:
+          type: boolean
+        handleRoomTypeChangesInShares:
+          type: boolean
+        hiltonOutboundCloudEnabled:
+          type: boolean
+        hiltonPreprocessingHonorsPastDays:
+          format: int32
+          type: integer
+        htngDecisionsThreshold:
+          format: int32
+          type: integer
+        htngIgnoreRoomRatesWithoutRateCode:
+          type: boolean
+        htngPricingDecisionsAmountAfterTax:
+          type: boolean
+        htngRoomStayReservationByDay:
+          type: boolean
+        htngUseBasicAuth:
+          type: boolean
+        id:
+          type: string
+        idpEnabled:
+          type: boolean
+        ignoreRateDetails:
+          type: boolean
+        ignoredReservationUpdateRateCodes:
+          items:
+            type: string
+          type: array
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundDataPullingIsRequired:
+          type: boolean
+        inboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundVendor:
+          type: boolean
+        includeRoomTypeHotelMarketSegmentActivity:
+          type: boolean
+        installationReservationsThreshold:
+          format: int32
+          type: integer
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        intermediateExchangeCurrency:
+          type: string
+        inventoryStalenessCheckEnabled:
+          type: boolean
+        isAgentThroughNgiEnabled:
+          type: boolean
+        isComponentRoomsActivityEnabled:
+          type: boolean
+        isEmulatorReplayPopulationEnabled:
+          type: boolean
+        isOhipReplayPopulationEnabled:
+          type: boolean
+        lastModifiedDate:
+          format: date-time
+          type: string
+        lrvCurrencyCode:
+          type: string
+        mapRatePlanMarketCode:
+          type: boolean
+        mergeGroupBlocksForHeaderOnlyCancel:
+          type: boolean
+        mergeGroupBlocksRatesIfMissing:
+          type: boolean
+        minReservationStayDate:
+          type: string
+        minReservationStayDateEnabled:
+          type: boolean
+        msrtSummaryPersistenceEnabled:
+          type: boolean
+        nextTaskDelay:
+          format: int32
+          type: integer
+        ohipDefaultMissingRevenueToZero:
+          type: boolean
+        ohipEmulatorResortCodeValidationEnabled:
+          type: boolean
+        ohipFutureCancelledRevenueToZero:
+          type: boolean
+        ohipReservationStatusTypesToInclude:
+          type: string
+        ohipRoomTypesToInclude:
+          type: string
+        ohipStraightMarketSegmentsToInclude:
+          type: string
+        outOfOrderRoomsCountAdjustmentEnabled:
+          type: boolean
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outgoingDailyBarUrl:
+          type: string
+        outgoingLrvUrl:
+          type: string
+        outgoingOverbookingUrl:
+          type: string
+        outgoingUrl:
+          type: string
+        oxiParkMessageTypes:
+          type: string
+        oxiRoomStayReservationByDay:
+          type: boolean
+        performanceMonitorEnabled:
+          type: boolean
+        populateInventoryDataForSummaryProperty:
+          type: boolean
+        populationChunkSize:
+          format: int32
+          type: integer
+        postDepartureRevenueAdjustmentEnabled:
+          type: boolean
+        preprocessingRequired:
+          type: boolean
+        preventPseudoDataInActivity:
+          type: boolean
+        pricingAndLrvRounding:
+          format: int32
+          type: integer
+        priority:
+          format: int32
+          type: integer
+        processSoftPickups:
+          type: boolean
+        pseudoRoomTypes:
+          items:
+            type: string
+          type: array
+        qualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        rateCodeGroupPrefix:
+          type: string
+        ratePlanCleanupEnabled:
+          type: boolean
+        readChunkSize:
+          format: int32
+          type: integer
+        rebuildRoomTypeMarketSegmentSummary:
+          type: boolean
+        recalculateGroups:
+          type: boolean
+        recalculateRatePlans:
+          type: boolean
+        replaceZeroRevenueCheckoutWithRateValue:
+          type: boolean
+        reservationRateCodesToFilter:
+          items:
+            type: string
+          type: array
+        reservationStatusesToFilter:
+          items:
+            type: string
+          type: array
+        reservationTypesToFilter:
+          items:
+            type: string
+          type: array
+        resetVirtualSuiteCounts:
+          type: boolean
+        rraUseCloudProcessing:
+          type: boolean
+        rsvPastDays:
+          format: int32
+          type: integer
+        runGroupAutoWash:
+          type: boolean
+        salesAndCateringStatus:
+          type: string
+        salesAndCateringUnitOfMeasure:
+          type: string
+        searchAlternateMarketSegmentLocationforHtng:
+          type: boolean
+        staticLRV:
+          type: boolean
+        summaryPersistenceEnabled:
+          type: boolean
+        tokenUrl:
+          type: string
+        trimMarketSegmentCode:
+          type: boolean
+        unqualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        uploadAdultsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildAgeBucketsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildrenRateUpTo:
+          format: int32
+          type: integer
+        uploadExtraAdultRates:
+          type: boolean
+        uploadExtraChildRates:
+          type: boolean
+        useLegacyRoomStayHandling:
+          type: boolean
+        useMaxRateValueForShares:
+          type: boolean
+        useNewMarketSegmentMappingLogic:
+          type: boolean
+        usePastInventoryForStatsAlways:
+          type: boolean
+        useReservationIdForShares:
+          type: boolean
+        useSihotShortReservationId:
+          type: boolean
+        validGroupMarketSegments:
+          items:
+            type: string
+          type: array
+        validTransientMarketSegments:
+          items:
+            type: string
+          type: array
+        vendorId:
+          type: string
+        version:
+          format: int64
+          type: integer
+        yieldCurrency:
+          type: string
+      required:
+      - extendedAttributes
+      - integrationType
+      - priority
+      - vendorId
+      type: object
+    ChannelDto:
+      properties:
+        channelCode:
+          type: string
+        id:
+          format: int32
+          type: integer
+        unifiedId:
+          format: uuid
+          type: string
+      type: object
+    DailyBarDecision:
+      properties:
+        additionalAdultRate:
+          description: extra person charge
+          type: number
+        additionalChildRate:
+          description: extra child rate
+          type: number
+        childAgeBucketFourRate:
+          description: parameter in the decisions defining rate value for the children
+            of the fourth specified age range
+          type: number
+        childAgeBucketOneRate:
+          description: parameter in the decisions defining rate value for the children
+            of the first specified age range
+          type: number
+        childAgeBucketThreeRate:
+          description: parameter in the decisions defining rate value for the children
+            of the third specified age range
+          type: number
+        childAgeBucketTwoRate:
+          description: parameter in the decisions defining rate value for the children
+            of the second specified age range
+          type: number
+        childFiveRate:
+          description: Age group 5 child rate
+          type: number
+        childFourRate:
+          description: Age group 4 child rate
+          type: number
+        childOneRate:
+          description: Age group 1 child rate
+          type: number
+        childThreeRate:
+          description: Age group 3 child rate
+          type: number
+        childTwoRate:
+          description: Age group 2 child rate
+          type: number
+        currencyCode:
+          description: -> Currency code that is associated to the rates in this decision.
+          type: string
+        doubleRate:
+          description: Room rate for 2 persons in room
+          type: number
+        occupancyDate:
+          description: The occupancyDate for which daily bar decision is sent - defined
+            by full-dat RFC3339 (YYYY-MM-DD).
+          format: date
+          type: string
+        quadRate:
+          description: Room rate for 4 persons in room
+          type: number
+        quintRate:
+          description: Room rate for 5 persons in room
+          type: number
+        rateCode:
+          description: Rate code for which daily bar decision is sent
+          type: string
+        roomTypeCode:
+          description: Room Type code for which daily bar decision is sent
+          type: string
+        singleRate:
+          description: Room rate for 1 person in room
+          type: number
+        taxExcluded:
+          description: Tax excluded
+          type: boolean
+        tripleRate:
+          description: Room rate for 3 persons in room
+          type: number
+      required:
+      - currencyCode
+      - doubleRate
+      - occupancyDate
+      - rateCode
+      - roomTypeCode
+      - singleRate
+      - taxExcluded
+      type: object
+    DayOfWeekAmount:
+      properties:
+        friday:
+          type: number
+        monday:
+          type: number
+        saturday:
+          type: number
+        sunday:
+          type: number
+        thursday:
+          type: number
+        tuesday:
+          type: number
+        wednesday:
+          type: number
+      type: object
+    DecisionDeliveryAggregatedStatus:
+      properties:
+        clientCode:
+          type: string
+        correlationId:
+          type: string
+        count:
+          format: int32
+          type: integer
+        lastUpdateDate:
+          format: date-time
+          type: string
+        nucleusDecisionType:
+          type: string
+        propertyCode:
+          type: string
+        startDateTime:
+          format: date-time
+          type: string
+        status:
+          type: string
+      type: object
+    DecisionDeliveryRequest:
+      properties:
+        clientCode:
+          type: string
+        clientEnvironmentId:
+          type: string
+        clientEnvironmentName:
+          type: string
+        correlationId:
+          type: string
+        destinationType:
+          enum:
+          - OXI
+          - TARS
+          - HILTON
+          - TEST
+          type: string
+        externalURL:
+          type: string
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        jobName:
+          type: string
+        ngiFplosDecisionsChunkSize:
+          format: int32
+          type: integer
+        nucleusDecisionType:
+          enum:
+          - LAST_ROOM_VALUE
+          - HOTEL_OVER_BOOKING
+          - ROOM_TYPE_OVER_BOOKING
+          - DAILY_BAR
+          - AGILE_RATES
+          - BAR_BY_LOS
+          - MINLOS_BY_RATE_CODE
+          - MINLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - MINLOS_BY_RATE_CATEGORY
+          - MINLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HOTEL
+          - BAR_FPLOS_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HIERARCHY
+          - BAR_FPLOS_BY_HIERARCHY_BY_ROOM_CLASS
+          - BAR_FPLOS_BY_RANK
+          - FPLOS
+          - FPLOS_BY_RATE_CODE
+          - FPLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - FPLOS_BY_RATE_CATEGORY
+          - FPLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - INVENTORY_LIMIT
+          type: string
+        operaDecisionType:
+          enum:
+          - LAST_ROOM_VALUE
+          - HOTEL_OVER_BOOKING
+          - ROOM_TYPE_OVER_BOOKING
+          - DAILY_BAR
+          - AGILE_RATES
+          - BAR_BY_LOS
+          - MINLOS_BY_RATE_CODE
+          - MINLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - MINLOS_BY_RATE_CATEGORY
+          - MINLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HOTEL
+          - BAR_FPLOS_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HIERARCHY
+          - BAR_FPLOS_BY_HIERARCHY_BY_ROOM_CLASS
+          - BAR_FPLOS_BY_RANK
+          - FPLOS
+          - FPLOS_BY_RATE_CODE
+          - FPLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - FPLOS_BY_RATE_CATEGORY
+          - FPLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - INVENTORY_LIMIT
+          type: string
+        operaDestinationType:
+          enum:
+          - OXI
+          - TARS
+          - HILTON
+          - TEST
+          type: string
+        optimizedDailyBarAgileRateUploadEnabled:
+          type: boolean
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        propertyCode:
+          type: string
+        virtualPropertyCode:
+          type: string
+      type: object
+    DecisionDeliveryRequestDto:
+      properties:
+        clientEnvironmentId:
+          description: Client specific metadata that ties back to client system.
+          type: string
+        clientEnvironmentName:
+          description: Client Environment name reply to, URL for callacks.
+          type: string
+        clientEnvironmentUrl:
+          description: Client Environment reply to, URL for callacks.
+          type: string
+        correlationId:
+          description: Correlation ID
+          type: string
+        decisionType:
+          enum:
+          - LAST_ROOM_VALUE_BY_ROOM_CLASS
+          - LAST_ROOM_VALUE_BY_ROOM_TYPE
+          - HOTEL_OVER_BOOKING
+          - ROOM_TYPE_OVER_BOOKING
+          - DAILY_BAR
+          - AGILE_RATES
+          - BAR_BY_LOS
+          - MINLOS_BY_RATE_CODE
+          - MINLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - MINLOS_BY_RATE_CATEGORY
+          - MINLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HOTEL
+          - BAR_FPLOS_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HIERARCHY
+          - BAR_FPLOS_BY_HIERARCHY_BY_ROOM_CLASS
+          - BAR_FPLOS_BY_RANK
+          - FPLOS
+          - FPLOS_BY_RATE_CODE
+          - FPLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - FPLOS_BY_RATE_CATEGORY
+          - FPLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - PROFIT_ADJUSTMENT
+          - HOTEL_CLOSE_TO_ARRIVAL
+          type: string
+        decisionUploadType:
+          enum:
+          - FULL
+          - DIFFERENTIAL
+          type: string
+        destinationType:
+          description: '!!! Deprecated !!! Destination type is deprecated and will
+            be deleted in future. Optional field. Avoid to use it for new integrations.
+            Get a value from IntegrationSettings'
+          enum:
+          - OXI
+          - TARS
+          - HILTON
+          - HTNG
+          - TEST
+          - APALEO
+          - SIHOT
+          - OHIP
+          - CLOUDBEDS
+          - PROFIT_ADJUSTMENT
+          - MEWS
+          type: string
+        processId:
+          description: Process id used for BMR events. (Business Monitoring)
+          type: string
+        requestStatus:
+          enum:
+          - NOT_STARTED
+          - IN_PROGRESS
+          - COMPLETED
+          type: string
+        summary:
+          $ref: '#/components/schemas/DecisionDeliveryRequestDtoSummary'
+        vendorId:
+          description: Vendor id to send decisions to
+          type: string
+      required:
+      - clientEnvironmentUrl
+      - decisionType
+      - decisionUploadType
+      - vendorId
+      type: object
+    DecisionDeliveryRequestDtoSummary:
+      properties:
+        failed:
+          format: int32
+          type: integer
+        pending:
+          format: int32
+          type: integer
+        sent:
+          format: int32
+          type: integer
+        success:
+          format: int32
+          type: integer
+      required:
+      - failed
+      - pending
+      - sent
+      - success
+      type: object
+    DecisionDeliveryTrackerDto:
+      properties:
+        errors:
+          items:
+            type: string
+          type: array
+        messageId:
+          type: string
+        status:
+          enum:
+          - PENDING
+          - SENT
+          - SUCCESS
+          - FAILED
+          type: string
+        warnings:
+          items:
+            type: string
+          type: array
+      required:
+      - messageId
+      type: object
+    Document:
+      additionalProperties:
+        type: object
+      properties:
+        empty:
+          type: boolean
+      type: object
+    FPLOSDecision:
+      properties:
+        arrivalDate:
+          format: date
+          type: string
+        clientCode:
+          type: string
+        correlationId:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        decisionType:
+          enum:
+          - LAST_ROOM_VALUE
+          - HOTEL_OVER_BOOKING
+          - ROOM_TYPE_OVER_BOOKING
+          - DAILY_BAR
+          - AGILE_RATES
+          - BAR_BY_LOS
+          - MINLOS_BY_RATE_CODE
+          - MINLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - MINLOS_BY_RATE_CATEGORY
+          - MINLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HOTEL
+          - BAR_FPLOS_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HIERARCHY
+          - BAR_FPLOS_BY_HIERARCHY_BY_ROOM_CLASS
+          - BAR_FPLOS_BY_RANK
+          - FPLOS
+          - FPLOS_BY_RATE_CODE
+          - FPLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - FPLOS_BY_RATE_CATEGORY
+          - FPLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - INVENTORY_LIMIT
+          type: string
+        id:
+          type: string
+        lastModifiedDate:
+          format: date-time
+          type: string
+        los1:
+          type: string
+        los2:
+          type: string
+        los3:
+          type: string
+        los4:
+          type: string
+        los5:
+          type: string
+        los6:
+          type: string
+        los7:
+          type: string
+        propertyCode:
+          type: string
+        rateCode:
+          type: string
+        roomTypeCode:
+          type: string
+      required:
+      - arrivalDate
+      - clientCode
+      - propertyCode
+      type: object
+    GenericErrorRestEndpoint:
+      properties:
+        httpMethod:
+          enum:
+          - GET
+          - HEAD
+          - POST
+          - PUT
+          - PATCH
+          - DELETE
+          - OPTIONS
+          - TRACE
+          type: string
+        mvcURL:
+          type: string
+        url:
+          type: string
+      type: object
+    HotelConfigParams:
+      properties:
+        activityDataPresendSanityCheckEnabled:
+          type: boolean
+        adjustIdpSoldsUsingSkewingFactor:
+          type: boolean
+        adjustReservationNetRates:
+          type: string
+        alternateHTNGGroupsFlow:
+          type: boolean
+        alternateHTNGNamespace:
+          type: boolean
+        assumePackageIncluded:
+          type: boolean
+        assumeTaxIncluded:
+          type: boolean
+        autoCancellationOfReservationsForAgentEnabled:
+          type: boolean
+        baseCurrencyCode:
+          type: string
+        buildMSActivityUsingPMSMS:
+          type: boolean
+        calculateNonPickedUpBlocksUsingSummaryData:
+          type: boolean
+        clientEnvironmentName:
+          type: string
+        cloudMigrationStatus:
+          type: string
+        componentRoomsActivityEnabled:
+          type: boolean
+        decisionsThreshold:
+          format: int32
+          type: integer
+        defaultGroupMarketSegmentCode:
+          type: string
+        defaultMarketSegmentCode:
+          type: string
+        defaultRoomType:
+          type: string
+        disableMixedExchangeRates:
+          type: boolean
+        enableNucleusExchangeRates:
+          type: boolean
+        externalPropertyId:
+          type: string
+        feedRequestDelay:
+          format: int32
+          type: integer
+        folsRoomStayReservationByDay:
+          type: boolean
+        folsUseCloudProcessing:
+          type: boolean
+        futureDays:
+          format: int32
+          type: integer
+        g2HotelCode:
+          type: string
+        g3HotelCode:
+          type: string
+        generateHotelActivityFromRoomTypeActivity:
+          type: boolean
+        generateMarketSegmentStatsEnabled:
+          type: boolean
+        generateRateCodeStatsEnabled:
+          type: boolean
+        groupPastDays:
+          format: int32
+          type: integer
+        handleDayUseToNonDayUseReservationConversion:
+          type: boolean
+        handlePreviouslyStraightMarketSegmentsInAms:
+          type: boolean
+        handleRoomTypeChangesInShares:
+          type: boolean
+        hotelCode:
+          type: string
+        htngCallbackOnCloudDisabled:
+          type: boolean
+        htngDecisionsThreshold:
+          format: int32
+          type: integer
+        htngIgnoreRoomRatesWithoutRateCode:
+          type: boolean
+        htngRoomStayReservationByDay:
+          type: boolean
+        htngUseBasicAuth:
+          type: boolean
+        htngUseCloudProcessing:
+          type: boolean
+        idpEnabled:
+          type: boolean
+        ignoreRateDetails:
+          type: boolean
+        inCatchup:
+          type: boolean
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundDataPullingIsRequired:
+          type: boolean
+        inboundHotelCode:
+          type: string
+        includeDayUseInRevenue:
+          type: boolean
+        includeNoShowInRevenue:
+          type: boolean
+        includePseudoInRevenue:
+          type: boolean
+        includeRoomTypeHotelMarketSegmentActivity:
+          type: boolean
+        installMode:
+          type: boolean
+        installationReservationsThreshold:
+          format: int32
+          type: integer
+        intermediateExchangeCurrency:
+          type: string
+        inventoryLoadingCronScheduleInUTC:
+          type: string
+        inventoryStalenessCheckEnabled:
+          type: boolean
+        isAgentThroughNgiEnabled:
+          type: boolean
+        isEmulatorReplayPopulationEnabled:
+          type: boolean
+        mapRatePlanMarketCode:
+          type: boolean
+        mergeGroupBlocksForHeaderOnlyCancel:
+          type: boolean
+        mergeGroupBlocksRatesIfMissing:
+          type: boolean
+        msrtSummaryPersistenceEnabled:
+          type: boolean
+        nextTaskDelay:
+          format: int32
+          type: integer
+        operaResortCode:
+          type: string
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outgoingDailyBarUrl:
+          type: string
+        outgoingLrvUrl:
+          type: string
+        outgoingOverbookingUrl:
+          type: string
+        outgoingUrl:
+          type: string
+        oxiInterfaceName:
+          type: string
+        oxiParkMessageTypes:
+          type: string
+        oxiRoomStayReservationByDay:
+          type: boolean
+        oxiUseCloudProcessing:
+          type: boolean
+        pastDays:
+          format: int32
+          type: integer
+        performanceMonitorEnabled:
+          type: boolean
+        populatePackageDataEnabled:
+          type: boolean
+        populationChunkSize:
+          format: int32
+          type: integer
+        preprocessingRequired:
+          type: boolean
+        preventPseudoDataInActivity:
+          type: boolean
+        processSoftPickups:
+          type: boolean
+        propertyName:
+          type: string
+        pseudoRoomTypes:
+          items:
+            type: string
+          type: array
+        qualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        ratePlanCleanupEnabled:
+          type: boolean
+        readChunkSize:
+          format: int32
+          type: integer
+        rebuildRoomTypeMarketSegmentSummary:
+          type: boolean
+        reservationStatusesToFilter:
+          items:
+            type: string
+          type: array
+        reservationTypesToFilter:
+          items:
+            type: string
+          type: array
+        resetVirtualSuiteCounts:
+          type: boolean
+        roomRevenuePackages:
+          type: string
+        rraUseCloudProcessing:
+          type: boolean
+        runGroupAutoWash:
+          type: boolean
+        salesAndCateringRMSCurrencyCode:
+          type: string
+        salesAndCateringStatus:
+          type: string
+        salesAndCateringUnitOfMeasure:
+          type: string
+        scheduledDeferredDelivery:
+          type: boolean
+        staticLRV:
+          type: boolean
+        summaryPersistenceEnabled:
+          type: boolean
+        taxAdjustmentValue:
+          type: number
+        timeSliceDefinitionIds:
+          type: string
+        unqualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        uploadAdultsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildAgeBucketsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildrenRateUpTo:
+          format: int32
+          type: integer
+        uploadExtraAdultRates:
+          type: boolean
+        uploadExtraChildRates:
+          type: boolean
+        useCurrencyInMessage:
+          type: boolean
+        useLegacyRoomStayHandling:
+          type: boolean
+        useMaxRateValueForShares:
+          type: boolean
+        useNetRoomRevenue:
+          type: boolean
+        useNewMarketSegmentMappingLogic:
+          type: boolean
+        usePastInventoryForStatsAlways:
+          type: boolean
+        useSihotShortReservationId:
+          type: boolean
+      type: object
+    HotelOverbookingResourceAssembler:
+      type: object
+    IntegrationClientConfig:
+      properties:
+        activityDataPresendSanityCheckEnabled:
+          type: boolean
+        adjustIdpSoldsUsingSkewingFactor:
+          type: boolean
+        adjustReservationNetRates:
+          type: string
+        allowBookingAndCancellationDateUpdates:
+          type: boolean
+        allowOverrideBookedRoomType:
+          type: boolean
+        allowZeroValuesInSummaryStats:
+          type: boolean
+        alternateHTNGGroupsFlow:
+          type: boolean
+        alternateHTNGNamespace:
+          type: boolean
+        autoCancellationOfReservationsForAgentEnabled:
+          type: boolean
+        baseCurrencyCode:
+          type: string
+        baseUrl:
+          type: string
+        buildMSActivityUsingPMSMS:
+          type: boolean
+        bypassFilterOnPseudoRoomTypes:
+          type: boolean
+        cdpFutureDays:
+          format: int32
+          type: integer
+        cdpPastDays:
+          format: int32
+          type: integer
+        checkVirtualSuitesComponentRooms:
+          type: boolean
+        clientCode:
+          type: string
+        clientEnvironmentName:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        cloudMigrationStatus:
+          type: string
+        combineOldMarketSegmentData:
+          type: boolean
+        componentRoomsActivityEnabled:
+          type: boolean
+        continuousPricingTopic:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        dailyBarCurrencyCode:
+          type: string
+        dailyBarRateCode:
+          type: string
+        decisionDeliveryMonitorDelay:
+          format: int32
+          type: integer
+        decisionUploadChunkSize:
+          format: int32
+          type: integer
+        decisionsThreshold:
+          format: int32
+          type: integer
+        defaultGroupMarketSegmentCode:
+          type: string
+        defaultMarketSegmentCode:
+          type: string
+        defaultRoomType:
+          type: string
+        disableMixedExchangeRates:
+          type: boolean
+        discontinuedMarketSegments:
+          items:
+            type: string
+          type: array
+        doNotCorrelateInventoriesInIdp:
+          type: boolean
+        enableNucleusExchangeRates:
+          type: boolean
+        enableOhipReservationEntityV2:
+          type: boolean
+        env:
+          type: string
+        excludeFromUnmappedGroupRateCodesRegexp:
+          type: string
+        excludeSemiyieldableRateAdjustments:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValue:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValueForGroupData:
+          type: boolean
+        extendedAttributes:
+          additionalProperties:
+            type: object
+          type: object
+        extendedStay:
+          type: boolean
+        failIncompleteInventory:
+          type: boolean
+        feedRequestDelay:
+          format: int32
+          type: integer
+        filterReservationsByExternalReferences:
+          type: boolean
+        folsRoomStayReservationByDay:
+          type: boolean
+        folsUseCloudProcessing:
+          type: boolean
+        generateHotelActivityFromRoomTypeActivity:
+          type: boolean
+        generateMarketSegmentStatsEnabled:
+          type: boolean
+        generateRateCodeStatsEnabled:
+          type: boolean
+        groupBlockPurgingBeyondPurgeDateEnabled:
+          type: boolean
+        groupPastDays:
+          format: int32
+          type: integer
+        handleDayUseToNonDayUseReservationConversion:
+          type: boolean
+        handleRoomTypeChangesInShares:
+          type: boolean
+        hiltonOutboundCloudEnabled:
+          type: boolean
+        hiltonPreprocessingHonorsPastDays:
+          format: int32
+          type: integer
+        htngCallbackOnCloudDisabled:
+          type: boolean
+        htngDecisionsThreshold:
+          format: int32
+          type: integer
+        htngIgnoreRoomRatesWithoutRateCode:
+          type: boolean
+        htngPricingDecisionsAmountAfterTax:
+          type: boolean
+        htngRoomStayReservationByDay:
+          type: boolean
+        htngUseBasicAuth:
+          type: boolean
+        htngUseCloudProcessing:
+          type: boolean
+        id:
+          type: string
+        idpEnabled:
+          type: boolean
+        ignoreRateDetails:
+          type: boolean
+        ignoredReservationUpdateRateCodes:
+          items:
+            type: string
+          type: array
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundDataPullingIsRequired:
+          type: boolean
+        inboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundVendor:
+          type: boolean
+        includeDayUseInRevenue:
+          type: boolean
+        includeNoShowInRevenue:
+          type: boolean
+        includePseudoInRevenue:
+          type: boolean
+        includeRoomTypeHotelMarketSegmentActivity:
+          type: boolean
+        installationReservationsThreshold:
+          format: int32
+          type: integer
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        intermediateExchangeCurrency:
+          type: string
+        inventoryStalenessCheckEnabled:
+          type: boolean
+        isAgentThroughNgiEnabled:
+          type: boolean
+        isComponentRoomsActivityEnabled:
+          type: boolean
+        isEmulatorReplayPopulationEnabled:
+          type: boolean
+        isOhipReplayPopulationEnabled:
+          type: boolean
+        lastModifiedDate:
+          format: date-time
+          type: string
+        lrvCurrencyCode:
+          type: string
+        mapRatePlanMarketCode:
+          type: boolean
+        mergeGroupBlocksForHeaderOnlyCancel:
+          type: boolean
+        mergeGroupBlocksRatesIfMissing:
+          type: boolean
+        minReservationStayDate:
+          type: string
+        minReservationStayDateEnabled:
+          type: boolean
+        msrtSummaryPersistenceEnabled:
+          type: boolean
+        nextTaskDelay:
+          format: int32
+          type: integer
+        ohipDefaultMissingRevenueToZero:
+          type: boolean
+        ohipEmulatorResortCodeValidationEnabled:
+          type: boolean
+        ohipFutureCancelledRevenueToZero:
+          type: boolean
+        ohipReservationStatusTypesToInclude:
+          type: string
+        ohipRoomTypesToInclude:
+          type: string
+        ohipStraightMarketSegmentsToInclude:
+          type: string
+        outOfOrderRoomsCountAdjustmentEnabled:
+          type: boolean
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outgoingDailyBarUrl:
+          type: string
+        outgoingLrvUrl:
+          type: string
+        outgoingOverbookingUrl:
+          type: string
+        outgoingUrl:
+          type: string
+        oxiParkMessageTypes:
+          type: string
+        oxiRoomStayReservationByDay:
+          type: boolean
+        oxiUseCloudProcessing:
+          type: boolean
+        performanceMonitorEnabled:
+          type: boolean
+        populateInventoryDataForSummaryProperty:
+          type: boolean
+        populatePackageDataEnabled:
+          type: boolean
+        populationChunkSize:
+          format: int32
+          type: integer
+        postDepartureRevenueAdjustmentEnabled:
+          type: boolean
+        preprocessingRequired:
+          type: boolean
+        preventPseudoDataInActivity:
+          type: boolean
+        pricingAndLrvRounding:
+          format: int32
+          type: integer
+        priority:
+          format: int32
+          type: integer
+        processSoftPickups:
+          type: boolean
+        pseudoRoomTypes:
+          items:
+            type: string
+          type: array
+        qualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        rateCodeGroupPrefix:
+          type: string
+        ratePlanCleanupEnabled:
+          type: boolean
+        rateRecommendationTopic:
+          type: string
+        readChunkSize:
+          format: int32
+          type: integer
+        rebuildRoomTypeMarketSegmentSummary:
+          type: boolean
+        recalculateGroups:
+          type: boolean
+        recalculateRatePlans:
+          type: boolean
+        replaceZeroRevenueCheckoutWithRateValue:
+          type: boolean
+        reservationRateCodesToFilter:
+          items:
+            type: string
+          type: array
+        reservationStatusesToFilter:
+          items:
+            type: string
+          type: array
+        reservationTypesToFilter:
+          items:
+            type: string
+          type: array
+        resetVirtualSuiteCounts:
+          type: boolean
+        rraUseCloudProcessing:
+          type: boolean
+        rsvPastDays:
+          format: int32
+          type: integer
+        runGroupAutoWash:
+          type: boolean
+        salesAndCateringRMSCurrencyCode:
+          type: string
+        salesAndCateringStatus:
+          type: string
+        salesAndCateringUnitOfMeasure:
+          type: string
+        searchAlternateMarketSegmentLocationforHtng:
+          type: boolean
+        sendHTNGCallbackRequest:
+          type: boolean
+        sncUseCloudProcessing:
+          type: boolean
+        sncUseGmeUIUrlForOnDemandEvaluation:
+          type: boolean
+        staticLRV:
+          type: boolean
+        summaryPersistenceEnabled:
+          type: boolean
+        tokenUrl:
+          type: string
+        trimMarketSegmentCode:
+          type: boolean
+        unqualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        uploadAdultsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildAgeBucketsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildrenRateUpTo:
+          format: int32
+          type: integer
+        uploadExtraAdultRates:
+          type: boolean
+        uploadExtraChildRates:
+          type: boolean
+        useCurrencyInMessage:
+          type: boolean
+        useLegacyRoomStayHandling:
+          type: boolean
+        useMaxRateValueForShares:
+          type: boolean
+        useNetRoomRevenue:
+          type: boolean
+        useNewMarketSegmentMappingLogic:
+          type: boolean
+        usePastInventoryForStatsAlways:
+          type: boolean
+        useReservationIdForShares:
+          type: boolean
+        useSihotShortReservationId:
+          type: boolean
+        validGroupMarketSegments:
+          items:
+            type: string
+          type: array
+        validTransientMarketSegments:
+          items:
+            type: string
+          type: array
+        vendorId:
+          type: string
+        version:
+          format: int64
+          type: integer
+        webhookToken:
+          type: string
+        yieldCurrency:
+          type: string
+      required:
+      - clientCode
+      - extendedAttributes
+      - integrationType
+      - priority
+      - vendorId
+      type: object
+    IntegrationPropertyConfig:
+      properties:
+        activityDataPresendSanityCheckEnabled:
+          type: boolean
+        adjustIdpSoldsUsingSkewingFactor:
+          type: boolean
+        adjustReservationNetRates:
+          type: string
+        allowBookingAndCancellationDateUpdates:
+          type: boolean
+        allowOverrideBookedRoomType:
+          type: boolean
+        allowZeroValuesInSummaryStats:
+          type: boolean
+        alternateHTNGGroupsFlow:
+          type: boolean
+        alternateHTNGNamespace:
+          type: boolean
+        applyTaxAdjustments:
+          type: boolean
+        assumePackageIncluded:
+          type: boolean
+        assumeTaxIncluded:
+          type: boolean
+        autoCancellationOfReservationsForAgentEnabled:
+          type: boolean
+        baseCurrencyCode:
+          type: string
+        buildMSActivityUsingPMSMS:
+          type: boolean
+        bypassFilterOnPseudoRoomTypes:
+          type: boolean
+        calculateNonPickedUpBlocksUsingSummaryData:
+          type: boolean
+        cdpFutureDays:
+          format: int32
+          type: integer
+        cdpPastDays:
+          format: int32
+          type: integer
+        checkVirtualSuitesComponentRooms:
+          type: boolean
+        clientCode:
+          type: string
+        clientEnvironmentName:
+          type: string
+        cloudMigrationStatus:
+          type: string
+        combineOldMarketSegmentData:
+          type: boolean
+        componentRoomsActivityEnabled:
+          type: boolean
+        createDate:
+          format: date-time
+          type: string
+        dailyBarCurrencyCode:
+          type: string
+        dailyBarRateCode:
+          type: string
+        decisionDeliveryMonitorDelay:
+          format: int32
+          type: integer
+        decisionUploadChunkSize:
+          format: int32
+          type: integer
+        decisionsThreshold:
+          format: int32
+          type: integer
+        defaultGroupMarketSegmentCode:
+          type: string
+        defaultMarketSegmentCode:
+          type: string
+        defaultRoomType:
+          type: string
+        disableMixedExchangeRates:
+          type: boolean
+        discontinuedMarketSegments:
+          items:
+            type: string
+          type: array
+        doNotCorrelateInventoriesInIdp:
+          type: boolean
+        enableNucleusExchangeRates:
+          type: boolean
+        enableOhipReservationEntityV2:
+          type: boolean
+        excludeFromUnmappedGroupRateCodesRegexp:
+          type: string
+        excludeSemiyieldableRateAdjustments:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValue:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValueForGroupData:
+          type: boolean
+        extendedAttributes:
+          additionalProperties:
+            type: object
+          type: object
+        extendedStay:
+          type: boolean
+        externalPropertyId:
+          type: string
+        failIncompleteInventory:
+          type: boolean
+        feedRequestDelay:
+          format: int32
+          type: integer
+        filterReservationsByExternalReferences:
+          type: boolean
+        folsRoomStayReservationByDay:
+          type: boolean
+        folsUseCloudProcessing:
+          type: boolean
+        futureDays:
+          format: int32
+          type: integer
+        generateHotelActivityFromRoomTypeActivity:
+          type: boolean
+        generateMarketSegmentStatsEnabled:
+          type: boolean
+        generateRateCodeStatsEnabled:
+          type: boolean
+        groupBlockPurgingBeyondPurgeDateEnabled:
+          type: boolean
+        groupPastDays:
+          format: int32
+          type: integer
+        handleDayUseToNonDayUseReservationConversion:
+          type: boolean
+        handlePreviouslyStraightMarketSegmentsInAms:
+          type: boolean
+        handleRoomTypeChangesInShares:
+          type: boolean
+        hiltonOutboundCloudEnabled:
+          type: boolean
+        hiltonPreprocessingHonorsPastDays:
+          format: int32
+          type: integer
+        htngCallbackOnCloudDisabled:
+          type: boolean
+        htngDecisionsThreshold:
+          format: int32
+          type: integer
+        htngIgnoreRoomRatesWithoutRateCode:
+          type: boolean
+        htngPricingDecisionsAmountAfterTax:
+          type: boolean
+        htngRoomStayReservationByDay:
+          type: boolean
+        htngUseBasicAuth:
+          type: boolean
+        htngUseCloudProcessing:
+          type: boolean
+        id:
+          type: string
+        idpEnabled:
+          type: boolean
+        ignoreRateDetails:
+          type: boolean
+        ignoredReservationUpdateRateCodes:
+          items:
+            type: string
+          type: array
+        inCatchup:
+          type: boolean
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundDataPullingIsRequired:
+          type: boolean
+        inboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundVendor:
+          type: boolean
+        includeDayUseInRevenue:
+          type: boolean
+        includeNoShowInRevenue:
+          type: boolean
+        includePseudoInRevenue:
+          type: boolean
+        includeRoomTypeHotelMarketSegmentActivity:
+          type: boolean
+        installMode:
+          type: boolean
+        installationReservationsThreshold:
+          format: int32
+          type: integer
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        intermediateExchangeCurrency:
+          type: string
+        inventoryLoadingCronScheduleInUTC:
+          type: string
+        inventoryStalenessCheckEnabled:
+          type: boolean
+        isAgentThroughNgiEnabled:
+          type: boolean
+        isComponentRoomsActivityEnabled:
+          type: boolean
+        isEmulatorReplayPopulationEnabled:
+          type: boolean
+        isOhipReplayPopulationEnabled:
+          type: boolean
+        lastModifiedDate:
+          format: date-time
+          type: string
+        lrvCurrencyCode:
+          type: string
+        mapRatePlanMarketCode:
+          type: boolean
+        mergeGroupBlocksForHeaderOnlyCancel:
+          type: boolean
+        mergeGroupBlocksRatesIfMissing:
+          type: boolean
+        minReservationStayDate:
+          type: string
+        minReservationStayDateEnabled:
+          type: boolean
+        msrtSummaryPersistenceEnabled:
+          type: boolean
+        nextTaskDelay:
+          format: int32
+          type: integer
+        ohipDefaultMissingRevenueToZero:
+          type: boolean
+        ohipEmulatorResortCodeValidationEnabled:
+          type: boolean
+        ohipFutureCancelledRevenueToZero:
+          type: boolean
+        ohipReservationStatusTypesToInclude:
+          type: string
+        ohipRoomTypesToInclude:
+          type: string
+        ohipStraightMarketSegmentsToInclude:
+          type: string
+        operaResortCode:
+          type: string
+        outOfOrderRoomsCountAdjustmentEnabled:
+          type: boolean
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outgoingDailyBarUrl:
+          type: string
+        outgoingLrvUrl:
+          type: string
+        outgoingOverbookingUrl:
+          type: string
+        outgoingUrl:
+          type: string
+        oxiInterfaceName:
+          type: string
+        oxiParkMessageTypes:
+          type: string
+        oxiRoomStayReservationByDay:
+          type: boolean
+        oxiUseCloudProcessing:
+          type: boolean
+        pastDays:
+          format: int32
+          type: integer
+        performanceMonitorEnabled:
+          type: boolean
+        populateInventoryDataForSummaryProperty:
+          type: boolean
+        populatePackageDataEnabled:
+          type: boolean
+        populationChunkSize:
+          format: int32
+          type: integer
+        postDepartureRevenueAdjustmentEnabled:
+          type: boolean
+        preprocessingRequired:
+          type: boolean
+        preventPseudoDataInActivity:
+          type: boolean
+        pricingAndLrvRounding:
+          format: int32
+          type: integer
+        priority:
+          format: int32
+          type: integer
+        processSoftPickups:
+          type: boolean
+        propertyCode:
+          type: string
+        pseudoRoomTypes:
+          items:
+            type: string
+          type: array
+        qualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        rateCodeGroupPrefix:
+          type: string
+        ratePlanCleanupEnabled:
+          type: boolean
+        readChunkSize:
+          format: int32
+          type: integer
+        rebuildRoomTypeMarketSegmentSummary:
+          type: boolean
+        recalculateGroups:
+          type: boolean
+        recalculateRatePlans:
+          type: boolean
+        relatedPhysicalPropertiesForVirtual:
+          items:
+            type: string
+          type: array
+        relatedVirtualProperty:
+          type: string
+        replaceZeroRevenueCheckoutWithRateValue:
+          type: boolean
+        reservationRateCodesToFilter:
+          items:
+            type: string
+          type: array
+        reservationStatusesToFilter:
+          items:
+            type: string
+          type: array
+        reservationTypesToFilter:
+          items:
+            type: string
+          type: array
+        resetVirtualSuiteCounts:
+          type: boolean
+        roomRevenuePackages:
+          type: string
+        rraUseCloudProcessing:
+          type: boolean
+        rsvPastDays:
+          format: int32
+          type: integer
+        runGroupAutoWash:
+          type: boolean
+        salesAndCateringRMSCurrencyCode:
+          type: string
+        salesAndCateringStatus:
+          type: string
+        salesAndCateringUnitOfMeasure:
+          type: string
+        scheduledDeferredDelivery:
+          type: boolean
+        searchAlternateMarketSegmentLocationforHtng:
+          type: boolean
+        sncUseCloudProcessing:
+          type: boolean
+        sncUseGmeUIUrlForOnDemandEvaluation:
+          type: boolean
+        staticLRV:
+          type: boolean
+        summaryPersistenceEnabled:
+          type: boolean
+        taxAdjustmentValue:
+          type: number
+        timeSliceDefinitionIds:
+          type: string
+        tokenUrl:
+          type: string
+        trimMarketSegmentCode:
+          type: boolean
+        unqualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        uploadAdultsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildAgeBucketsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildrenRateUpTo:
+          format: int32
+          type: integer
+        uploadExtraAdultRates:
+          type: boolean
+        uploadExtraChildRates:
+          type: boolean
+        useCurrencyInMessage:
+          type: boolean
+        useLegacyRoomStayHandling:
+          type: boolean
+        useMaxRateValueForShares:
+          type: boolean
+        useNetRoomRevenue:
+          type: boolean
+        useNewMarketSegmentMappingLogic:
+          type: boolean
+        usePastInventoryForStatsAlways:
+          type: boolean
+        useReservationIdForShares:
+          type: boolean
+        useSihotShortReservationId:
+          type: boolean
+        validGroupMarketSegments:
+          items:
+            type: string
+          type: array
+        validTransientMarketSegments:
+          items:
+            type: string
+          type: array
+        vendorId:
+          type: string
+        version:
+          format: int64
+          type: integer
+        virtualProperty:
+          type: boolean
+        yieldCurrency:
+          type: string
+      required:
+      - clientCode
+      - extendedAttributes
+      - integrationType
+      - priority
+      - propertyCode
+      - vendorId
+      type: object
+    IntegrationVendorConfig:
+      properties:
+        activityDataPresendSanityCheckEnabled:
+          type: boolean
+        adjustIdpSoldsUsingSkewingFactor:
+          type: boolean
+        adjustReservationNetRates:
+          type: string
+        allowBookingAndCancellationDateUpdates:
+          type: boolean
+        allowOverrideBookedRoomType:
+          type: boolean
+        allowZeroValuesInSummaryStats:
+          type: boolean
+        alternateHTNGGroupsFlow:
+          type: boolean
+        alternateHTNGNamespace:
+          type: boolean
+        autoCancellationOfReservationsForAgentEnabled:
+          type: boolean
+        baseCurrencyCode:
+          type: string
+        buildMSActivityUsingPMSMS:
+          type: boolean
+        bypassFilterOnPseudoRoomTypes:
+          type: boolean
+        cancelMultiUnitDecrements:
+          type: boolean
+        cdpFutureDays:
+          format: int32
+          type: integer
+        cdpPastDays:
+          format: int32
+          type: integer
+        checkVirtualSuitesComponentRooms:
+          type: boolean
+        combineOldMarketSegmentData:
+          type: boolean
+        componentRoomsActivityEnabled:
+          type: boolean
+        createDate:
+          format: date-time
+          type: string
+        customReplyToAddress:
+          type: string
+        dailyBarCurrencyCode:
+          type: string
+        dailyBarRateCode:
+          type: string
+        decisionDeliveryMonitorDelay:
+          format: int32
+          type: integer
+        decisionUploadChunkSize:
+          format: int32
+          type: integer
+        decisionsThreshold:
+          format: int32
+          type: integer
+        dedicatedValidationResponseChannel:
+          type: boolean
+        defaultGroupMarketSegmentCode:
+          type: string
+        defaultMarketSegmentCode:
+          type: string
+        defaultRoomType:
+          type: string
+        disableMixedExchangeRates:
+          type: boolean
+        discontinuedMarketSegments:
+          items:
+            type: string
+          type: array
+        doNotCorrelateInventoriesInIdp:
+          type: boolean
+        enableNucleusExchangeRates:
+          type: boolean
+        enableOhipReservationEntityV2:
+          type: boolean
+        excludeFromUnmappedGroupRateCodesRegexp:
+          type: string
+        excludeSemiyieldableRateAdjustments:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValue:
+          type: boolean
+        excludeYieldCurrencyConversionForRateValueForGroupData:
+          type: boolean
+        extendedAttributes:
+          additionalProperties:
+            type: object
+          type: object
+        extendedStay:
+          type: boolean
+        failIncompleteInventory:
+          type: boolean
+        feedRequestDelay:
+          format: int32
+          type: integer
+        filterReservationsByExternalReferences:
+          type: boolean
+        folsRoomStayReservationByDay:
+          type: boolean
+        folsUseCloudProcessing:
+          type: boolean
+        generateHotelActivityFromRoomTypeActivity:
+          type: boolean
+        generateMarketSegmentStatsEnabled:
+          type: boolean
+        generateRateCodeStatsEnabled:
+          type: boolean
+        groupBlockPurgingBeyondPurgeDateEnabled:
+          type: boolean
+        groupPastDays:
+          format: int32
+          type: integer
+        handleDayUseToNonDayUseReservationConversion:
+          type: boolean
+        handleRoomTypeChangesInShares:
+          type: boolean
+        hiltonOutboundCloudEnabled:
+          type: boolean
+        hiltonPreprocessingHonorsPastDays:
+          format: int32
+          type: integer
+        htngAvailRQCustomAction:
+          type: string
+        htngDecisionsThreshold:
+          format: int32
+          type: integer
+        htngIgnoreRoomRatesWithoutRateCode:
+          type: boolean
+        htngInvBlockRSCustomAction:
+          type: string
+        htngInvCountRSCustomAction:
+          type: string
+        htngPricingDecisionsAmountAfterTax:
+          type: boolean
+        htngRatePlanRQCustomAction:
+          type: string
+        htngRatePlanRSCustomAction:
+          type: string
+        htngResRSCustomAction:
+          type: string
+        htngRoomStayReservationByDay:
+          type: boolean
+        htngStatsRSCustomAction:
+          type: string
+        htngUseBasicAuth:
+          type: boolean
+        id:
+          type: string
+        idpEnabled:
+          type: boolean
+        ignoreRateDetails:
+          type: boolean
+        ignoredReservationUpdateRateCodes:
+          items:
+            type: string
+          type: array
+        inboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundDataPullingIsRequired:
+          type: boolean
+        inboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        inboundVendor:
+          type: boolean
+        includeRoomTypeHotelMarketSegmentActivity:
+          type: boolean
+        installationReservationsThreshold:
+          format: int32
+          type: integer
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        intermediateExchangeCurrency:
+          type: string
+        inventoryStalenessCheckEnabled:
+          type: boolean
+        isAgentThroughNgiEnabled:
+          type: boolean
+        isComponentRoomsActivityEnabled:
+          type: boolean
+        isEmulatorReplayPopulationEnabled:
+          type: boolean
+        isOhipReplayPopulationEnabled:
+          type: boolean
+        lastModifiedDate:
+          format: date-time
+          type: string
+        lrvCurrencyCode:
+          type: string
+        mapRatePlanMarketCode:
+          type: boolean
+        mergeGroupBlocksForHeaderOnlyCancel:
+          type: boolean
+        mergeGroupBlocksRatesIfMissing:
+          type: boolean
+        minReservationStayDate:
+          type: string
+        minReservationStayDateEnabled:
+          type: boolean
+        msrtSummaryPersistenceEnabled:
+          type: boolean
+        nextTaskDelay:
+          format: int32
+          type: integer
+        ohipDefaultMissingRevenueToZero:
+          type: boolean
+        ohipEmulatorResortCodeValidationEnabled:
+          type: boolean
+        ohipFutureCancelledRevenueToZero:
+          type: boolean
+        ohipReservationStatusTypesToInclude:
+          type: string
+        ohipRoomTypesToInclude:
+          type: string
+        ohipStraightMarketSegmentsToInclude:
+          type: string
+        outOfOrderRoomsCountAdjustmentEnabled:
+          type: boolean
+        outboundCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outboundDecisionCredentials:
+          $ref: '#/components/schemas/VendorCredentials'
+        outgoingDailyBarUrl:
+          type: string
+        outgoingLrvUrl:
+          type: string
+        outgoingOverbookingUrl:
+          type: string
+        outgoingUrl:
+          type: string
+        oxiParkMessageTypes:
+          type: string
+        oxiRoomStayReservationByDay:
+          type: boolean
+        performanceMonitorEnabled:
+          type: boolean
+        populateInventoryDataForSummaryProperty:
+          type: boolean
+        populationChunkSize:
+          format: int32
+          type: integer
+        postDepartureRevenueAdjustmentEnabled:
+          type: boolean
+        preprocessingRequired:
+          type: boolean
+        preventPseudoDataInActivity:
+          type: boolean
+        pricingAndLrvRounding:
+          format: int32
+          type: integer
+        priority:
+          format: int32
+          type: integer
+        processSoftPickups:
+          type: boolean
+        pseudoRoomTypes:
+          items:
+            type: string
+          type: array
+        qualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        rateCodeGroupPrefix:
+          type: string
+        ratePlanCleanupEnabled:
+          type: boolean
+        readChunkSize:
+          format: int32
+          type: integer
+        rebuildRoomTypeMarketSegmentSummary:
+          type: boolean
+        recalculateGroups:
+          type: boolean
+        recalculateRatePlans:
+          type: boolean
+        replaceZeroRevenueCheckoutWithRateValue:
+          type: boolean
+        reservationRateCodesToFilter:
+          items:
+            type: string
+          type: array
+        reservationStatusesToFilter:
+          items:
+            type: string
+          type: array
+        reservationTypesToFilter:
+          items:
+            type: string
+          type: array
+        resetVirtualSuiteCounts:
+          type: boolean
+        rraUseCloudProcessing:
+          type: boolean
+        rsvPastDays:
+          format: int32
+          type: integer
+        runGroupAutoWash:
+          type: boolean
+        salesAndCateringStatus:
+          type: string
+        salesAndCateringUnitOfMeasure:
+          type: string
+        searchAlternateMarketSegmentLocationforHtng:
+          type: boolean
+        sendHTNGCallbackRequest:
+          type: boolean
+        staticLRV:
+          type: boolean
+        summaryPersistenceEnabled:
+          type: boolean
+        tokenUrl:
+          type: string
+        trimMarketSegmentCode:
+          type: boolean
+        unqualifiedRatesDirectPopulationDisabled:
+          type: boolean
+        uploadAdultsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildAgeBucketsRateUpTo:
+          format: int32
+          type: integer
+        uploadChildrenRateUpTo:
+          format: int32
+          type: integer
+        uploadExtraAdultRates:
+          type: boolean
+        uploadExtraChildRates:
+          type: boolean
+        useCustomSoapAction:
+          type: boolean
+        useLegacyRoomStayHandling:
+          type: boolean
+        useMaxRateValueForShares:
+          type: boolean
+        useNewMarketSegmentMappingLogic:
+          type: boolean
+        usePastInventoryForStatsAlways:
+          type: boolean
+        useReservationIdForShares:
+          type: boolean
+        useSihotShortReservationId:
+          type: boolean
+        validGroupMarketSegments:
+          items:
+            type: string
+          type: array
+        validTransientMarketSegments:
+          items:
+            type: string
+          type: array
+        vendorId:
+          type: string
+        version:
+          format: int64
+          type: integer
+        yieldCurrency:
+          type: string
+      required:
+      - extendedAttributes
+      - integrationType
+      - priority
+      - vendorId
+      type: object
+    InventoryLimitDecision:
+      properties:
+        clientCode:
+          type: string
+        correlationId:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+        inventoryLimit:
+          format: int32
+          type: integer
+        lastModifiedDate:
+          format: date-time
+          type: string
+        occupancyDate:
+          format: date
+          type: string
+        propertyCode:
+          type: string
+        rateCode:
+          type: string
+      required:
+      - clientCode
+      - propertyCode
+      type: object
+    LastRoomValueDecision:
+      properties:
+        ceilingValue:
+          description: Ceiling value
+          type: number
+        currencyCode:
+          description: Currency code
+          type: string
+        deltaValue:
+          description: Delta value
+          type: number
+        inventoryCode:
+          description: Inventory code for which last room value decision is sent
+          type: string
+        lastRoomValue:
+          description: Last room value code that is associated to the rates in this
+            decision.
+          type: number
+        maxSolds:
+          description: Maximum Sold
+          type: number
+        occupancyDate:
+          description: The occupancyDate for which last room value decision is sent
+            - defined by full-dat RFC3339 (YYYY-MM-DD).
+          format: date
+          type: string
+      required:
+      - ceilingValue
+      - currencyCode
+      - deltaValue
+      - inventoryCode
+      - lastRoomValue
+      - maxSolds
+      - occupancyDate
+      type: object
+    Link:
+      properties:
+        deprecation:
+          type: string
+        href:
+          type: string
+        hreflang:
+          type: string
+        media:
+          type: string
+        rel:
+          type: string
+        templated:
+          type: boolean
+        title:
+          type: string
+        type:
+          type: string
+      type: object
+    MessageObject:
+      properties:
+        headers:
+          additionalProperties:
+            type: object
+          properties:
+            empty:
+              type: boolean
+            errorChannel:
+              type: object
+            id:
+              format: uuid
+              type: string
+            replyChannel:
+              type: object
+            timestamp:
+              format: int64
+              type: integer
+          type: object
+        payload:
+          type: object
+      type: object
+    MessageStats:
+      properties:
+        ack:
+          format: int64
+          type: integer
+        ack_details:
+          $ref: '#/components/schemas/RateDetails'
+        confirm:
+          format: int64
+          type: integer
+        confirm_details:
+          $ref: '#/components/schemas/RateDetails'
+        deliver:
+          format: int64
+          type: integer
+        deliver_details:
+          $ref: '#/components/schemas/RateDetails'
+        deliver_get:
+          format: int64
+          type: integer
+        deliver_get_details:
+          $ref: '#/components/schemas/RateDetails'
+        deliver_no_ack:
+          format: int64
+          type: integer
+        deliver_no_ack_details:
+          $ref: '#/components/schemas/RateDetails'
+        get:
+          format: int64
+          type: integer
+        get_details:
+          $ref: '#/components/schemas/RateDetails'
+        get_no_ack:
+          format: int64
+          type: integer
+        get_no_ack_details:
+          $ref: '#/components/schemas/RateDetails'
+        publish:
+          format: int64
+          type: integer
+        publish_details:
+          $ref: '#/components/schemas/RateDetails'
+        redeliver:
+          format: int64
+          type: integer
+        redeliver_details:
+          $ref: '#/components/schemas/RateDetails'
+        return_unroutable:
+          format: int64
+          type: integer
+        return_unroutable_details:
+          $ref: '#/components/schemas/RateDetails'
+      type: object
+    MinLosDecision:
+      properties:
+        arrivalDate:
+          description: The arrivalDate for which minimum length of stay decision is
+            sent RFC3339 (YYYY-MM-DD).
+          format: date
+          type: string
+        minimumLengthOfStay:
+          description: The minimal amount of days available for booking
+          type: number
+        rateCode:
+          description: Rate code for which MinLos decision is sent
+          type: string
+        roomTypeCode:
+          description: Room Type code for which MinLos decision is sent
+          type: string
+      required:
+      - arrivalDate
+      - minimumLengthOfStay
+      type: object
+    NucleusCompositeNotification:
+      properties:
+        clientCode:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        destinationChannel:
+          type: string
+        expirationDate:
+          format: date-time
+          type: string
+        expired:
+          type: boolean
+        finalStatusDate:
+          format: date-time
+          type: string
+        id:
+          type: string
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        lastModifiedDate:
+          format: date-time
+          type: string
+        notificationCount:
+          format: int32
+          type: integer
+        pending:
+          type: boolean
+        propertyCode:
+          type: string
+        restEndpoint:
+          $ref: '#/components/schemas/GenericErrorRestEndpoint'
+        status:
+          enum:
+          - PENDING
+          - SENT
+          - FAILED
+          - CANCELLED
+          type: string
+        targetNotification:
+          type: object
+      required:
+      - clientCode
+      - expirationDate
+      - integrationType
+      - notificationCount
+      - propertyCode
+      - status
+      - targetNotification
+      type: object
+    NucleusCorrelationMetadata:
+      properties:
+        additionalInformation:
+          additionalProperties:
+            type: string
+          type: object
+        businessModule:
+          enum:
+          - FUNCTION_SPACE
+          - STR
+          - DEMAND_360
+          - RESERVATION
+          - FOLS
+          - RRA
+          - REVENUE_STREAMS
+          type: string
+        captureDate:
+          format: date-time
+          type: string
+        clientCode:
+          type: string
+        correlationStatus:
+          enum:
+          - IN_PROGRESS
+          - SUCCESSFUL
+          - FAILED
+          - ABANDONED
+          - DUPLICATE
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        currentFile:
+          format: binary
+          type: string
+        currentFilePath:
+          type: string
+        id:
+          type: string
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        lastModifiedDate:
+          format: date-time
+          type: string
+        name:
+          type: string
+        originalFile:
+          format: binary
+          type: string
+        originalFilePath:
+          type: string
+        propertyCode:
+          type: string
+        propertyIdentifier:
+          $ref: '#/components/schemas/PropertyIdentifier'
+        sendingSystemPropertyId:
+          type: string
+      type: object
+    NucleusDailyBarDecision:
+      properties:
+        additionalAdultRate:
+          type: number
+        additionalChildRate:
+          type: number
+        childAgeBucketFourRate:
+          type: number
+        childAgeBucketOneRate:
+          type: number
+        childAgeBucketThreeRate:
+          type: number
+        childAgeBucketTwoRate:
+          type: number
+        childFiveRate:
+          type: number
+        childFourRate:
+          type: number
+        childOneRate:
+          type: number
+        childThreeRate:
+          type: number
+        childTwoRate:
+          type: number
+        clientCode:
+          type: string
+        correlationId:
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        currencyCode:
+          type: string
+        decisionType:
+          enum:
+          - LAST_ROOM_VALUE
+          - HOTEL_OVER_BOOKING
+          - ROOM_TYPE_OVER_BOOKING
+          - DAILY_BAR
+          - AGILE_RATES
+          - BAR_BY_LOS
+          - MINLOS_BY_RATE_CODE
+          - MINLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - MINLOS_BY_RATE_CATEGORY
+          - MINLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HOTEL
+          - BAR_FPLOS_BY_ROOM_TYPE
+          - BAR_FPLOS_BY_HIERARCHY
+          - BAR_FPLOS_BY_HIERARCHY_BY_ROOM_CLASS
+          - BAR_FPLOS_BY_RANK
+          - FPLOS
+          - FPLOS_BY_RATE_CODE
+          - FPLOS_BY_RATE_CODE_BY_ROOM_TYPE
+          - FPLOS_BY_RATE_CATEGORY
+          - FPLOS_BY_RATE_CATEGORY_BY_ROOM_TYPE
+          - INVENTORY_LIMIT
+          type: string
+        doubleRate:
+          type: number
+        id:
+          type: string
+        lastModifiedDate:
+          format: date-time
+          type: string
+        occupancyDate:
+          format: date
+          type: string
+        propertyCode:
+          type: string
+        quadRate:
+          type: number
+        quintRate:
+          type: number
+        rateCode:
+          type: string
+        rateType:
+          enum:
+          - amountoffrack
+          - amountaddrack
+          - percentoffrack
+          - percentaddrack
+          - rack
+          type: string
+        roomTypeCode:
+          type: string
+        singleRate:
+          type: number
+        taxExcluded:
+          type: boolean
+        tripleRate:
+          type: number
+      required:
+      - clientCode
+      - propertyCode
+      type: object
+    NucleusEventMessage:
+      properties:
+        clientCode:
+          type: string
+        clientEnvironmentName:
+          type: string
+        eventType:
+          enum:
+          - GENERATE_DATAFEED_FILE
+          - GENERATE_OPTIX_DATAFEED_FILE
+          - GENERATE_GEMINI_DATAFEED_FILE
+          - UPLOAD_TARS_DECISIONS
+          - DATA_PULL
+          - GET_EXTRACT
+          - NOTIFY_DECISION_ACK_STATUS
+          - UPLOAD_NSIGHT_REPORT
+          - TRIGGER_EXTARCT_PROCESSING
+          - GENERATE_DATAFEED_STREAM
+          - PURGE_DEMAND360_DATA
+          type: string
+        parameters:
+          additionalProperties:
+            type: object
+          type: object
+        propertyCode:
+          type: string
+      type: object
+    OpenCloseRestrictionDecisions:
+      properties:
+        arrivalDate:
+          description: arrivalDate of OpenCloseRestrictionDecisions
+          format: date
+          type: string
+        status:
+          description: status of OpenCloseRestrictionDecisions
+          enum:
+          - open
+          - close
+          type: string
+      required:
+      - arrivalDate
+      - status
+      type: object
+    OverbookingDecision:
+      properties:
+        authorizedCapacity:
+          description: Amount of authorized capacity
+          type: number
+        occupancyDate:
+          description: The occupancyDate for which overbooking decision is sent -
+            defined by full-date RFC3339 (YYYY-MM-DD).
+          format: date
+          type: string
+        overbooking:
+          description: Amount of overbooked rooms
+          type: number
+        roomTypeCode:
+          description: Room Type code for which overbooking decision is sent
+          type: string
+        splitRatio:
+          additionalProperties:
+            type: number
+          type: object
+      required:
+      - authorizedCapacity
+      - occupancyDate
+      - overbooking
+      type: object
+    OwnerPidDetails:
+      properties:
+        name:
+          type: string
+        peerHost:
+          type: string
+        peerPort:
+          format: int32
+          type: integer
+      type: object
+    PageIntegrationClientConfig:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/IntegrationClientConfig'
+          type: array
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          format: int32
+          type: integer
+        numberOfElements:
+          format: int32
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        size:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/Sort'
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+      type: object
+    PageIntegrationPropertyConfig:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/IntegrationPropertyConfig'
+          type: array
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          format: int32
+          type: integer
+        numberOfElements:
+          format: int32
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        size:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/Sort'
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+      type: object
+    PageIntegrationVendorConfig:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/IntegrationVendorConfig'
+          type: array
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          format: int32
+          type: integer
+        numberOfElements:
+          format: int32
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        size:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/Sort'
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+      type: object
+    PageMetadata:
+      properties:
+        number:
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        size:
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        totalElements:
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+        totalPages:
+          format: int64
+          type: integer
+          xml:
+            attribute: true
+      type: object
+    PageNucleusCompositeNotification:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/NucleusCompositeNotification'
+          type: array
+        empty:
+          type: boolean
+        first:
+          type: boolean
+        last:
+          type: boolean
+        number:
+          format: int32
+          type: integer
+        numberOfElements:
+          format: int32
+          type: integer
+        pageable:
+          $ref: '#/components/schemas/Pageable'
+        size:
+          format: int32
+          type: integer
+        sort:
+          $ref: '#/components/schemas/Sort'
+        totalElements:
+          format: int64
+          type: integer
+        totalPages:
+          format: int32
+          type: integer
+      type: object
+    Pageable:
+      properties:
+        offset:
+          format: int64
+          type: integer
+        pageNumber:
+          format: int32
+          type: integer
+        pageSize:
+          format: int32
+          type: integer
+        paged:
+          type: boolean
+        sort:
+          $ref: '#/components/schemas/Sort'
+        unpaged:
+          type: boolean
+      type: object
+    PagedResources:
+      properties:
+        content:
+          items:
+            type: object
+          type: array
+          xml:
+            wrapped: true
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+        page:
+          $ref: '#/components/schemas/PageMetadata'
+      type: object
+      xml:
+        name: pagedEntities
+    PagedResourcesAssemblerFPLOSDecision:
+      properties:
+        forceFirstAndLastRels:
+          type: boolean
+          writeOnly: true
+      type: object
+    PagedResourcesAssemblerNucleusCorrelationMetadata:
+      properties:
+        forceFirstAndLastRels:
+          type: boolean
+          writeOnly: true
+      type: object
+    PagedResourcesAssemblerOverbookingDecision:
+      properties:
+        forceFirstAndLastRels:
+          type: boolean
+          writeOnly: true
+      type: object
+    PagedResourcesResourceNucleusCorrelationMetadata:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceNucleusCorrelationMetadata'
+          type: array
+          xml:
+            wrapped: true
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+        page:
+          $ref: '#/components/schemas/PageMetadata'
+      type: object
+      xml:
+        name: pagedEntities
+    ProfitAdjustment:
+      properties:
+        currencyCode:
+          description: Currency code of Profit Adjustment
+          type: string
+        dayOfWeekAmount:
+          $ref: '#/components/schemas/DayOfWeekAmount'
+        endDate:
+          description: End date of Profit Adjustment
+          format: date
+          type: string
+        marketSegment:
+          description: Market segment of Profit Adjustment
+          type: string
+        rateCode:
+          description: Rate code of Profit Adjustment
+          type: string
+        roomClass:
+          description: Room class of Profit Adjustment
+          type: string
+        startDate:
+          description: Start date of Profit Adjustment
+          format: date
+          type: string
+        type:
+          description: Type of Profit Adjustment
+          enum:
+          - Adjustments
+          - Replacement
+          type: string
+      required:
+      - currencyCode
+      - endDate
+      - roomClass
+      - startDate
+      - type
+      type: object
+    PropertyDto:
+      properties:
+        address:
+          type: string
+        chainCode:
+          type: string
+        chainName:
+          type: string
+        channels:
+          items:
+            $ref: '#/components/schemas/ChannelDto'
+          type: array
+        city:
+          type: string
+        countryCode:
+          type: string
+        createdBy:
+          type: string
+        createdOn:
+          format: date-time
+          type: string
+        g2ChainCode:
+          type: string
+        g2HostUrl:
+          type: string
+        g2PropertyCode:
+          type: string
+        hotelCapacity:
+          format: int32
+          type: integer
+        hotelOpenedDate:
+          format: date
+          type: string
+        latitude:
+          format: double
+          type: number
+        longitude:
+          format: double
+          type: number
+        name:
+          type: string
+        open:
+          type: boolean
+        parentChainCode:
+          type: string
+        parentChainName:
+          type: string
+        pmsPropertyId:
+          type: string
+        postalCode:
+          type: string
+        starRating:
+          format: int32
+          type: integer
+        state:
+          type: string
+        timezone:
+          type: string
+        unifiedId:
+          format: uuid
+          type: string
+        updatedBy:
+          type: string
+        updatedOn:
+          format: date-time
+          type: string
+        vendorMappings:
+          items:
+            $ref: '#/components/schemas/VendorMappingDto'
+          type: array
+      type: object
+    PropertyIdentifier:
+      properties:
+        clientCode:
+          type: string
+        propertyCode:
+          type: string
+        sendingSystemPropertyId:
+          type: string
+      type: object
+    QualifiedSetting:
+      properties:
+        attribute:
+          type: string
+        clientCode:
+          type: string
+        propertyCode:
+          type: string
+        value:
+          type: object
+        vendorId:
+          type: string
+      type: object
+    QueueInfo:
+      properties:
+        arguments:
+          additionalProperties:
+            type: object
+          type: object
+        auto_delete:
+          type: boolean
+        consumerUtilisation:
+          format: int64
+          type: integer
+        consumers:
+          format: int64
+          type: integer
+        disk_reads:
+          format: int64
+          type: integer
+        disk_writes:
+          format: int64
+          type: integer
+        durable:
+          type: boolean
+        exclusive:
+          type: boolean
+        exclusive_consumer_tag:
+          type: string
+        idle_since:
+          type: string
+        memory:
+          format: int64
+          type: integer
+        message_bytes:
+          format: int64
+          type: integer
+        message_bytes_persistent:
+          format: int64
+          type: integer
+        message_bytes_ram:
+          format: int64
+          type: integer
+        message_bytes_ready:
+          format: int64
+          type: integer
+        message_bytes_unacknowledged:
+          format: int64
+          type: integer
+        message_stats:
+          $ref: '#/components/schemas/MessageStats'
+        messages:
+          format: int64
+          type: integer
+        messages_persistent:
+          format: int64
+          type: integer
+        messages_ram:
+          format: int64
+          type: integer
+        messages_ready:
+          format: int64
+          type: integer
+        messages_ready_details:
+          $ref: '#/components/schemas/RateDetails'
+        messages_unacknowledged:
+          format: int64
+          type: integer
+        messages_unacknowledged_details:
+          $ref: '#/components/schemas/RateDetails'
+        name:
+          type: string
+        node:
+          type: string
+        owner_pid_details:
+          $ref: '#/components/schemas/OwnerPidDetails'
+        policy:
+          type: string
+        state:
+          type: string
+        vhost:
+          type: string
+      type: object
+    RateDetails:
+      properties:
+        rate:
+          format: double
+          type: number
+      type: object
+    Resource:
+      properties:
+        content:
+          type: object
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+      type: object
+    ResourceNucleusCorrelationMetadata:
+      properties:
+        additionalInformation:
+          additionalProperties:
+            type: string
+          type: object
+        businessModule:
+          enum:
+          - FUNCTION_SPACE
+          - STR
+          - DEMAND_360
+          - RESERVATION
+          - FOLS
+          - RRA
+          - REVENUE_STREAMS
+          type: string
+        captureDate:
+          format: date-time
+          type: string
+        clientCode:
+          type: string
+        correlationStatus:
+          enum:
+          - IN_PROGRESS
+          - SUCCESSFUL
+          - FAILED
+          - ABANDONED
+          - DUPLICATE
+          type: string
+        createDate:
+          format: date-time
+          type: string
+        currentFile:
+          format: binary
+          type: string
+        currentFilePath:
+          type: string
+        id:
+          type: string
+        integrationType:
+          enum:
+          - FUNCTION_SPACE_CLIENT
+          - OXI_SC
+          - UNQUALIFIED_RATES
+          - QUALIFIED_RATES
+          - STR_MONTHLY
+          - STR_WEEKLY
+          - ACTIVITY_DATA
+          - ACTIVITY_DATA_CDP
+          - OXI_PMS
+          - DEMAND360_DATA_LOAD
+          - FOLS
+          - RRA
+          - AHWS_SC
+          - HTNG
+          - HILTON
+          - MARS
+          - OPERA_SC
+          - REVENUE_STREAMS
+          - APALEO
+          - SIHOT
+          - UNKNOWN
+          - SALES_AND_CATERING
+          - OHIP
+          - OHIP_SNC
+          - IDEAS_RMS
+          - IDEASFILE
+          - CLOUDBEDS
+          - MEWS
+          - PROFIT_ADJUSTMENT
+          type: string
+        lastModifiedDate:
+          format: date-time
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+          xml:
+            name: link
+            namespace: http://www.w3.org/2005/Atom
+        name:
+          type: string
+        originalFile:
+          format: binary
+          type: string
+        originalFilePath:
+          type: string
+        propertyCode:
+          type: string
+        propertyIdentifier:
+          $ref: '#/components/schemas/PropertyIdentifier'
+        sendingSystemPropertyId:
+          type: string
+      type: object
+    ResourceOfDailyBarDecision:
+      properties:
+        additionalAdultRate:
+          type: number
+        additionalChildRate:
+          type: number
+        childAgeBucketFourRate:
+          type: number
+        childAgeBucketOneRate:
+          type: number
+        childAgeBucketThreeRate:
+          type: number
+        childAgeBucketTwoRate:
+          type: number
+        childFiveRate:
+          type: number
+        childFourRate:
+          type: number
+        childOneRate:
+          type: number
+        childThreeRate:
+          type: number
+        childTwoRate:
+          type: number
+        currencyCode:
+          type: string
+        doubleRate:
+          type: number
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        occupancyDate:
+          type: string
+        quadRate:
+          type: number
+        quintRate:
+          type: number
+        rateCode:
+          type: string
+        roomTypeCode:
+          type: string
+        singleRate:
+          type: number
+        taxExcluded:
+          type: boolean
+        tripleRate:
+          type: number
+      type: object
+    ResourceOfLastRoomValueDecision:
+      properties:
+        ceilingValue:
+          type: number
+        currencyCode:
+          type: string
+        deltaValue:
+          type: number
+        inventoryCode:
+          type: string
+        lastRoomValue:
+          type: number
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        maxSolds:
+          type: number
+        occupancyDate:
+          type: string
+      type: object
+    ResourceOfMinLosDecision:
+      properties:
+        arrivalDate:
+          format: date
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        minimumLengthOfStay:
+          type: number
+        rateCode:
+          type: string
+        roomTypeCode:
+          type: string
+      type: object
+    ResourceOfOpenCloseRestrictionDecisions:
+      properties:
+        arrivalDate:
+          description: arrivalDate of OpenCloseRestrictionDecisions
+          format: date
+          type: string
+        clientCode:
+          description: clientCode of OpenCloseRestrictionDecisions
+          type: string
+        correlationId:
+          description: correlationId of OpenCloseRestrictionDecisions
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        propertyCode:
+          description: propertyCode of OpenCloseRestrictionDecisions
+          type: string
+        status:
+          description: status of OpenCloseRestrictionDecisions
+          enum:
+          - open
+          - close
+          type: string
+      type: object
+    ResourceOfOverbookingDecision:
+      properties:
+        authorizedCapacity:
+          type: number
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        occupancyDate:
+          type: string
+        overbooking:
+          type: number
+        roomTypeCode:
+          type: string
+      type: object
+    ResourceOfProfitAdjustment:
+      properties:
+        currencyCode:
+          type: string
+        dayOfWeekAmount:
+          $ref: '#/components/schemas/DayOfWeekAmount'
+        endDate:
+          format: date
+          type: string
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        marketSegment:
+          type: string
+        rateCode:
+          type: string
+        roomClass:
+          type: string
+        startDate:
+          format: date
+          type: string
+        type:
+          enum:
+          - Adjustment
+          - Replacement
+          type: string
+      type: object
+    SecurityConfiguration:
+      properties:
+        apiKey:
+          type: string
+        apiKeyName:
+          type: string
+        apiKeyVehicle:
+          type: string
+        appName:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        realm:
+          type: string
+        scopeSeparator:
+          type: string
+      type: object
+    SimpleObjectRestWrapperBoolean:
+      properties:
+        data:
+          type: boolean
+      type: object
+    SimpleObjectRestWrapperLong:
+      properties:
+        data:
+          format: int64
+          type: integer
+      type: object
+    SimpleObjectRestWrapperString:
+      properties:
+        data:
+          type: string
+      type: object
+    SliceMetadata:
+      properties:
+        number:
+          format: int64
+          type: integer
+        size:
+          format: int64
+          type: integer
+      type: object
+    SlicedResourcesOfDailyBarDecision:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfDailyBarDecision'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfDecisionDeliveryTracker:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfLastRoomValueDecision:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfLastRoomValueDecision'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfMinLosDecision:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfMinLosDecision'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfOpenCloseRestrictionDecisions:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfOpenCloseRestrictionDecisions'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfOverbookingDecision:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfOverbookingDecision'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    SlicedResourcesOfProfitAdjustment:
+      properties:
+        content:
+          items:
+            $ref: '#/components/schemas/ResourceOfProfitAdjustment'
+          type: array
+        links:
+          items:
+            $ref: '#/components/schemas/Link'
+          type: array
+        page:
+          $ref: '#/components/schemas/SliceMetadata'
+      type: object
+    Sort:
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+      type: object
+    SwaggerResource:
+      properties:
+        location:
+          type: string
+        name:
+          type: string
+        swaggerVersion:
+          type: string
+      type: object
+    UiConfiguration:
+      properties:
+        apisSorter:
+          type: string
+        defaultModelRendering:
+          type: string
+        docExpansion:
+          type: string
+        jsonEditor:
+          type: boolean
+        requestTimeout:
+          format: int64
+          type: integer
+        showRequestHeaders:
+          type: boolean
+        supportedSubmitMethods:
+          items:
+            type: string
+          type: array
+        validatorUrl:
+          type: string
+      type: object
+    VendorCredentials:
+      properties:
+        authenticationToken:
+          type: string
+        clientId:
+          type: string
+        clientSecret:
+          type: string
+        fullAccessMode:
+          type: boolean
+        password:
+          type: string
+        sendXApiKey:
+          type: string
+        username:
+          type: string
+      type: object
+    VendorMappingDto:
+      properties:
+        id:
+          format: int32
+          type: integer
+        unifiedId:
+          format: uuid
+          type: string
+        vendor:
+          type: string
+        vendorHotelId:
+          type: string
+      type: object
+    VendorRateCodeMappingDto:
+      properties:
+        rateCodeMapping:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        vendorPropertyCode:
+          type: string
+      type: object
+    VendorRoomClassMappingDto:
+      properties:
+        roomClassMapping:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        vendorPropertyCode:
+          type: string
+      type: object
+    VendorRoomTypeMappingDto:
+      properties:
+        roomTypeMapping:
+          additionalProperties:
+            items:
+              type: string
+            type: array
+          type: object
+        vendorPropertyCode:
+          type: string
+      type: object
+info:
+  description: Decision Delivery Service project API.
+  title: Decision Delivery Service API
+  version: v1
+openapi: 3.0.1
+paths:
+  /api/v1/decisiondelivery/first/tracker/{clientCode}/{propertyCode}/{correlationId}/{messageId}:
+    get:
+      description: Get the first DecisionDeliveryTracker found by clientCode, propertyCode
+        and messageId from an ascending order.
+      operationId: findByClientCodeAndPropertyCodeAndMessageIdOrderByClientCodeAsc
+      parameters:
+      - description: clientCode
+        in: path
+        name: clientCode
+        required: true
+        schema:
+          type: string
+      - description: propertyCode
+        in: path
+        name: propertyCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: correlationId
+        required: true
+        schema:
+          type: string
+      - description: messageId
+        in: path
+        name: messageId
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: DecisionDeliveryTracker could not be found
+        '406':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Precondition failed
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal server error
+      summary: Get the First DecisionDeliveryTracker from Ascending order.
+      tags:
+      - DecisionDeliveryTracker
+  /api/v1/decisiondelivery/trackers/{clientCode}/{propertyCode}/{correlationId}:
+    get:
+      description: Get all DecisionDeliveryTrackers that match clientCode, propertyCode,
+        correlationId and status.
+      operationId: findByClientCodeAndPropertyCodeAndCorrelationIdAndStatusIn
+      parameters:
+      - description: clientCode
+        in: path
+        name: clientCode
+        required: true
+        schema:
+          type: string
+      - description: propertyCode
+        in: path
+        name: propertyCode
+        required: true
+        schema:
+          type: string
+      - description: correlationId
+        in: path
+        name: correlationId
+        required: true
+        schema:
+          type: string
+      - description: status
+        in: query
+        name: status
+        required: false
+        schema:
+          items:
+            enum:
+            - PENDING
+            - SENT
+            - SUCCESS
+            - FAILED
+            type: string
+          type: array
+      - description: Indicate the page number. follow link for pagination guidance
+          <a href = https://ideasinc.atlassian.net/wiki/spaces/AFD/pages/251822249/Pagination>Ideas
+          Wiki for Rest Pagination</a>
+        in: query
+        name: page
+        required: false
+        schema:
+          default: 0
+          format: int32
+          type: integer
+      - description: Number of records per page. value more then max range will be
+          taken as 10000 and less then zero as zero
+        in: query
+        name: size
+        required: false
+        schema:
+          default: 20
+          format: int32
+          maximum: 1000
+          minimum: 0
+          type: integer
+      - description: Sorting is using query param sort. Excepting comma separated
+          value and optionaly direction, For more detail please refer <a href = https://ideasinc.atlassian.net/wiki/spaces/AFD/pages/269811802/Sorting+on+collection>IdeaS
+          Sorting on Collection</a>
+        in: query
+        name: sort
+        required: false
+        schema:
+          items:
+            type: string
+          type: array
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/SlicedResourcesOfDecisionDeliveryTracker'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/SlicedResourcesOfDecisionDeliveryTracker'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SlicedResourcesOfDecisionDeliveryTracker'
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: DecisionDeliveryTracker could not be found
+        '406':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Precondition failed
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/hal+json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal server error
+      summary: Get collection of DecisionDeliveryTrackers.
+      tags:
+      - DecisionDeliveryTracker
+    post:
+      description: Create DecisionDeliveryTrackers with clientCode, propertyCode,
+        correlationId in pending status.
+      operationId: bulkCreation
+      parameters:
+      - description: clientCode
+        in: path
+        name: clientCode
+        required: true
+        schema:
+          type: string
+      - description: propertyCode
+        in: path
+        name: propertyCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: correlationId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              items:
+                $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+              type: array
+        required: true
+      responses:
+        '200':
+          content:
+            '*/*':
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+                type: array
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+                type: array
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: DecisionDeliveryRequest could not be found
+        '409':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Conflict
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal server error
+      summary: Trackers bulk creation
+      tags:
+      - DecisionDeliveryTracker
+  /api/v1/decisiondelivery/trackers/{clientCode}/{propertyCode}/{correlationId}/{messageId}:
+    patch:
+      description: Update DecisionDeliveryTrackers with status, warrnings, errors.
+      operationId: updateByMessageId
+      parameters:
+      - in: path
+        name: clientCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: propertyCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: correlationId
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: messageId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: DecisionDeliveryTracker for clientCode, propertyCode, correlationId
+            messageId is not found!
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal server error
+      summary: Update tracker
+      tags:
+      - DecisionDeliveryTracker
+  /api/v1/decisiondelivery/trackers/{clientCode}/{propertyCode}/{messageId}:
+    patch:
+      description: Update DecisionDeliveryTrackers with status, warrnings, errors.
+      operationId: updateByMessageIdWithOutCorrelationId
+      parameters:
+      - in: path
+        name: clientCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: propertyCode
+        required: true
+        schema:
+          type: string
+      - in: path
+        name: messageId
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DecisionDeliveryTrackerDto'
+        required: true
+      responses:
+        '200':
+          description: OK
+        '400':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Bad request
+        '404':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: DecisionDeliveryTracker for clientCode, propertyCode, and messageId
+            is not found!
+        '500':
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/ApiError'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiError'
+          description: Internal server error
+      summary: Update tracker
+      tags:
+      - DecisionDeliveryTracker
+servers:
+- url: https://decision-delivery-internal.stage.ideasrms.com

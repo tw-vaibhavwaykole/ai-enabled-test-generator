@@ -33,7 +33,7 @@ class OpenAIAdapter(BaseAdapter):
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": kwargs.get("temperature", 0.7),
-            "max_tokens": kwargs.get("max_tokens", 3000),
+            "max_tokens": kwargs.get("max_tokens", 1500),
             "n": kwargs.get("n", 1)
         }
         

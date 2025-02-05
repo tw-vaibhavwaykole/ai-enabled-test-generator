@@ -13,48 +13,89 @@ def headers():
 from typing import Dict, List
 import allure
 
-# Constants
-BASE_URL = "http://localhost:8080/api"
-# Fixtures for session, authorization, and test data setup
+# Import necessary libraries
+# Common fixtures
 @pytest.fixture(scope="module")
-def get_api_key():
-    # placeholder for getting the API key
-    return "your_api_key"
-@pytest.fixture(scope="function")
-def create_pet(get_api_key):
-    """Fixture to create a pet before tests and delete it afterwards."""
-    url = f"{BASE_URL}/pets"
-    headers = {"X-API-Key": get_api_key}
-    pet_data = {"id": 1, "name": "Buddy", "status": "available"}
-    response = requests.post(url, headers=headers, json=pet_data)
-    yield response.json()
-    # Teardown: delete the pet
-    requests.delete(f"{url}/{pet_data['id']}", headers=headers)
-# Test functions with Allure decorators
-@allure.feature('Pets')
-@allure.story('Create, Retrieve, Update, Delete (CRUD)')
-def test_add_pet(get_api_key):
-    """Test adding a new pet."""
-    url = f"{BASE_URL}/pets"
-    headers = {"X-API-Key": get_api_key}
-    pet_data = {"id": 2, "name": "Charlie", "status": "available"}
-    with allure.step("Create a new pet"):
-        response = requests.post(url, headers=headers, json=pet_data)
-        assert response.status_code == 201
-    with allure.step("Check the pet was added correctly"):
-        get_response = requests.get(f"{url}/{pet_data['id']}", headers=headers)
-        assert get_response.status_code == 200
-        assert get_response.json()['name'] == pet_data['name']
-@pytest.mark.usefixtures("create_pet")
-@allure.feature('Pets')
-@allure.story('Validation')
-def test_get_pet_by_id(create_pet, get_api_key):
-    """Test retrieving a pet by ID."""
-    pet = create_pet
-    url = f"{BASE_URL}/pets/{pet['id']}"
-    headers = {"X-API-Key": get_api_key}
-    with allure.step("Retrieve the pet by ID"):
-        response = requests.get(url, headers=headers)
+def base_url():
+    return "https://decision-delivery-internal.stage.ideasrms.com"
+@pytest.fixture(scope="session")
+def api_headers():
+    return {"Content-Type": "application/json", "Accept": "application/json"}
+def get_auth_token():
+    # Mock authentication token retrieval
+    return "mock_token"
+@allure.feature('CRUD Operations')
+class TestDecisionDeliveryTrackerCRUD:
+    @allure.story('Create Decision Delivery Tracker')
+    @pytest.mark.parametrize("data", [
+        {"clientCode": "testClient", "propertyCode": "testProperty", "correlationId": "testCorrelation", "messageId": "1"},
+        # Add more data sets for bulk creation
+    ])
+    def test_create_decision_delivery_tracker(self, base_url, api_headers, get_auth_token, data):
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/{data['clientCode']}/{data['propertyCode']}/{data['correlationId']}"
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        response = requests.post(url, headers=api_headers, json=[data])
         assert response.status_code == 200
-        assert response.json()['id'] == pet['id']
-# More tests for update, delete, complex queries, and other operations can be added following the above pattern
+        assert 'application/json' in response.headers['Content-Type']
+        # Further response validation goes here
+    @allure.story('Read Decision Delivery Tracker')
+    def test_read_decision_delivery_tracker(self, base_url, api_headers, get_auth_token):
+        client_code = "testClient"
+        property_code = "testProperty"
+        correlation_id = "testCorrelation"
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/{client_code}/{property_code}/{correlation_id}"
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        response = requests.get(url, headers=api_headers)
+        assert response.status_code == 200
+        assert 'application/json' in response.headers['Content-Type']
+        # Further response validation goes here
+    @allure.story('Update Decision Delivery Tracker')
+    def test_update_decision_delivery_tracker(self, base_url, api_headers, get_auth_token):
+        client_code = "testClient"
+        property_code = "testProperty"
+        correlation_id = "testCorrelation"
+        message_id = "1"
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/{client_code}/{property_code}/{correlation_id}/{message_id}"
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        new_data = {"status": "SUCCESS"}
+        response = requests.patch(url, headers=api_headers, json=new_data)
+        assert response.status_code == 200
+        # Further response validation goes here
+    @allure.story('Delete Decision Delivery Tracker')
+    def test_delete_decision_delivery_tracker(self, base_url, api_headers, get_auth_token):
+        client_code = "testClient"
+        property_code = "testProperty"
+        correlation_id = "testCorrelation"
+        message_id = "1"
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/{client_code}/{property_code}/{correlation_id}/{message_id}"
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        response = requests.delete(url, headers=api_headers)
+        assert response.status_code == 204
+        # Further response validation goes here
+@allure.feature('Data Validation')
+class TestDataValidation:
+    @allure.story('Validate Required Fields')
+    def test_validate_required_fields(self, base_url, api_headers, get_auth_token):
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/testClient/testProperty/testCorrelation"
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        incomplete_data = {"clientCode": "onlyClientCode"}  # Missing other required fields
+        response = requests.post(url, headers=api_headers, json=[incomplete_data])
+        assert response.status_code == 400
+        assert 'application/json' in response.headers['Content-Type']
+        # Further error message validation goes here
+@allure.feature('Complex Queries')
+class TestComplexQueries:
+    @allure.story('Filter and Sort')
+    def test_filter_and_sort(self, base_url, api_headers, get_auth_token):
+        url = f"{base_url}/api/v1/decisiondelivery/trackers/testClient/testProperty/testCorrelation"
+        params = {
+            "status": "PENDING",
+            "sort": "messageId,desc",
+            "page": 0,
+            "size": 10
+        }
+        api_headers['Authorization'] = f"Bearer {get_auth_token}"
+        response = requests.get(url, headers=api_headers, params=params)
+        assert response.status_code == 200
+        assert 'application/json' in response.headers['Content-Type']
+        # Validate sorting and pagination logic from response data
