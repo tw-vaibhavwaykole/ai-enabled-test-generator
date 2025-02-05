@@ -97,6 +97,7 @@ def main():
             # Add common imports and fixtures to each file
             f.write("""import pytest
 import requests
+import allure
 
 @pytest.fixture
 def base_url():

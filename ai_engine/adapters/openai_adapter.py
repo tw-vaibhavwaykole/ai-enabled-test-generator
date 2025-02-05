@@ -9,7 +9,7 @@ class OpenAIAdapter(BaseAdapter):
     Adapter for integrating with OpenAI's GPT-based models using the new API format.
     """
 
-    def __init__(self, api_key: str = None, model: str = "gpt-3.5-turbo"):
+    def __init__(self, api_key: str = None, model: str = "gpt-4-turbo"):
         """
         :param api_key: API key for OpenAI.
         :param model: The model to use (default: gpt-3.5-turbo).
@@ -33,7 +33,7 @@ class OpenAIAdapter(BaseAdapter):
             "model": self.model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": kwargs.get("temperature", 0.7),
-            "max_tokens": kwargs.get("max_tokens", 150),
+            "max_tokens": kwargs.get("max_tokens", 3000),
             "n": kwargs.get("n", 1)
         }
         

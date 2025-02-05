@@ -18,6 +18,8 @@ ENV/
 
 # Project specific
 artifacts/reports/
+artifacts/generated_tests/functional_api_tests.py
+artifacts/generated_tests/security_tests.py
 !artifacts/reports/README.md
 
 # Logs

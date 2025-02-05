@@ -1,5 +1,6 @@
 import pytest
 import requests
+import allure
 
 @pytest.fixture
 def base_url():
@@ -10,64 +11,50 @@ def headers():
     return {'Content-Type': 'application/json'}
 
 from typing import Dict, List
-import json
 import allure
 
-fake = Faker()
-@pytest.fixture
-def base_url():
-    return 'http://localhost:8080/api'
-def auth_header():
-    return {'X-API-Key': 'your_api_key'}
-# Helper functions
-def create_pet(payload):
-    response = requests.post(f'{base_url()}/pets', json=payload)
-    return response.json()
-def get_pet_by_id(pet_id):
-    response = requests.get(f'{base_url()}/pets/{pet_id}')
-    return response.json()
-# CRUD Operations
-@pytest.mark.parametrize('payload', [{'name': fake.name(), 'age': fake.random_int(min=1, max=10), 'status': 'available'}])
-def test_create_pet(payload, base_url, auth_header):
-    response = create_pet(payload)
-    assert response['name'] == payload['name']
-    assert response['status'] == payload['status']
-def test_read_pet_by_id(base_url, auth_header):
-    pet_id = 1
-    response = get_pet_by_id(pet_id)
-    assert response['id'] == pet_id
-# Data Validation
-def test_field_type_validation():
-    payload = {'name': fake.name(), 'age': 'invalid', 'status': 'available'}
-    with pytest.raises(TypeError):
-        create_pet(payload)
-def test_required_fields():
-    payload = {'age': 5, 'status': 'available'}
-    with pytest.raises(Exception):
-        create_pet(payload)
-# Query Parameters
-def test_filtering():
-    response = requests.get(f'{base_url()}/pets?status=available')
-    assert all(pet['status'] == 'available' for pet in response.json())
-# Response Validation
-def test_status_codes():
-    response = requests.get(f'{base_url()}/pets')
-    assert response.status_code == 200
-# Business Logic
-def test_workflow_validation():
-    payload = {'name': fake.name(), 'age': 5, 'status': 'pending'}
-    response = create_pet(payload)
-    assert response['status'] == 'pending'
-# Edge Cases
-def test_empty_values():
-    payload = {'name': ''}
-    with pytest.raises(Exception):
-        create_pet(payload)
-# Performance Scenarios
-def test_response_times():
-    response = requests.get(f'{base_url()}/pets')
-    assert response.elapsed.total_seconds() < 1
-# Integration Points
-def test_database_operations():
-    response = requests.get(f'{base_url()}/pets')
-    assert len(response.json()) > 0
+# Constants
+BASE_URL = "http://localhost:8080/api"
+# Fixtures for session, authorization, and test data setup
+@pytest.fixture(scope="module")
+def get_api_key():
+    # placeholder for getting the API key
+    return "your_api_key"
+@pytest.fixture(scope="function")
+def create_pet(get_api_key):
+    """Fixture to create a pet before tests and delete it afterwards."""
+    url = f"{BASE_URL}/pets"
+    headers = {"X-API-Key": get_api_key}
+    pet_data = {"id": 1, "name": "Buddy", "status": "available"}
+    response = requests.post(url, headers=headers, json=pet_data)
+    yield response.json()
+    # Teardown: delete the pet
+    requests.delete(f"{url}/{pet_data['id']}", headers=headers)
+# Test functions with Allure decorators
+@allure.feature('Pets')
+@allure.story('Create, Retrieve, Update, Delete (CRUD)')
+def test_add_pet(get_api_key):
+    """Test adding a new pet."""
+    url = f"{BASE_URL}/pets"
+    headers = {"X-API-Key": get_api_key}
+    pet_data = {"id": 2, "name": "Charlie", "status": "available"}
+    with allure.step("Create a new pet"):
+        response = requests.post(url, headers=headers, json=pet_data)
+        assert response.status_code == 201
+    with allure.step("Check the pet was added correctly"):
+        get_response = requests.get(f"{url}/{pet_data['id']}", headers=headers)
+        assert get_response.status_code == 200
+        assert get_response.json()['name'] == pet_data['name']
+@pytest.mark.usefixtures("create_pet")
+@allure.feature('Pets')
+@allure.story('Validation')
+def test_get_pet_by_id(create_pet, get_api_key):
+    """Test retrieving a pet by ID."""
+    pet = create_pet
+    url = f"{BASE_URL}/pets/{pet['id']}"
+    headers = {"X-API-Key": get_api_key}
+    with allure.step("Retrieve the pet by ID"):
+        response = requests.get(url, headers=headers)
+        assert response.status_code == 200
+        assert response.json()['id'] == pet['id']
+# More tests for update, delete, complex queries, and other operations can be added following the above pattern
