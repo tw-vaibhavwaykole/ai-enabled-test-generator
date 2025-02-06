@@ -1,22 +1,94 @@
-# Functional Test Template v1
-Generate pytest-compatible functional tests for the following specification.
-Include complete test functions with proper assertions.
+# Enhanced Functional Test Template v1.2
+Generate comprehensive pytest-compatible functional tests with security and validation checks.
 
 Specification:
 {{ spec | tojson }}
 
+Configuration Parameters:
+- API_BASE_URL: {{ config.base_url | default('http://localhost:8080/api') }}
+- ENABLE_RBAC_CHECKS: {{ config.enable_rbac | default(false) }}
+- MAX_RESPONSE_TIME_MS: {{ config.performance_threshold | default(500) }}
+
 Requirements:
-- Use Python 3.8+ syntax
-- Each test function must start with 'test_'
-- Include docstrings explaining the test purpose
-- Validate both success and error cases
-- Use pytest fixtures where appropriate
+1. Python 3.8+ syntax with type hints
+2. Test functions follow naming convention: test_[method]_[endpoint]
+3. Include:
+   - Response validation against OpenAPI schema
+   - Security header checks
+   - Error message validation
+   - Performance threshold checks
+   - RBAC validation (if enabled)
+4. Use pytest fixtures for:
+   - API client with authentication
+   - Test data generation
+   - Schema validation
 
-Example format:
+Security Checks to Include:
+- Validate Content-Security-Policy headers
+- Check for strict-transport-security
+- Verify X-Content-Type-Options: nosniff
+- Validate authorization header presence when required
+
+Example Template:
+
 @pytest.fixture
-def base_url():
-    return 'http://localhost:8080/api'
+def api_client():
+    \"\"\"Client with authentication and base headers\"\"\"
+    client = requests.Session()
+    client.headers.update({
+        "Authorization": "Bearer {{ test_token }}",
+        "Content-Type": "application/json"
+    })
+    yield client
+    client.close()
 
-def test_example(base_url):  # Use base_url fixture
-    \"\"\"Test description\"\"\"
-    response = requests.get(f'{{base_url}}/endpoint')
+def test_get_{{ endpoint }}(api_client, base_url, validate_schema):
+    \"\"\"Test successful {{ endpoint }} retrieval with schema validation
+    
+    Test Priority: Critical
+    Associated Requirements: REQ-{{ spec.info.version }}-FUNC-001
+    \"\"\"
+    start_time = time.perf_counter()
+    response = api_client.get(f"{base_url}/{{ endpoint }}")
+    
+    # Basic response validation
+    assert response.status_code == 200
+    assert response.headers['Content-Type'] == 'application/json'
+    
+    # Performance check
+    assert (time.perf_counter() - start_time) * 1000 < MAX_RESPONSE_TIME_MS
+    
+    # Security headers
+    assert 'Content-Security-Policy' in response.headers
+    assert 'X-Content-Type-Options' in response.headers
+    
+    # Schema validation
+    validate_schema(response.json(), '{{ endpoint }}_schema')
+
+def test_invalid_{{ endpoint }}_request(api_client, base_url):
+    \"\"\"Test error handling for malformed requests\"\"\"
+    response = api_client.post(
+        f"{base_url}/{{ endpoint }}",
+        data="invalid_json"
+    )
+    
+    assert response.status_code == 400
+    error_data = response.json()
+    assert error_data['error']['type'] == 'validation_error'
+    assert 'malformed JSON' in error_data['error']['message']
+    
+{% if ENABLE_RBAC_CHECKS %}
+def test_unauthorized_{{ endpoint }}_access(api_client, base_url):
+    \"\"\"Verify RBAC rules enforcement\"\"\"
+    api_client.headers.pop('Authorization')
+    response = api_client.get(f"{base_url}/{{ endpoint }}")
+    assert response.status_code == 401
+    assert 'WWW-Authenticate' in response.headers
+{% endif %}
+
+# Common Error Status Codes to Validate
+{% for code in [400, 401, 403, 404, 429, 500] %}
+def test_{{ endpoint }}_error_{{ code }}(api_client, base_url):
+    \"\"\"Verify proper handling of {{ code }} errors\"\"\"
+    # Implement test for expected {{ code }} scenario
+{% endfor %}

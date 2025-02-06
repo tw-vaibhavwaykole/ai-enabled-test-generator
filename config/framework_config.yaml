@@ -2,6 +2,7 @@
 
 pytest:
   command: "pytest"
+  base_url: "https://petstore.swagger.io/v2"
   test_directory: "tests"
   options: "--maxfail=1 --disable-warnings"
 

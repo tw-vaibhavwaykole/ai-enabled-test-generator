@@ -3,6 +3,11 @@
 functional:
   adapter: "openai"
   generator: "functional_test_generator"
+  template: "ai_engine/prompt_manager/jinja_templates/functional/default_v1.jinja"
+  config:
+    base_url: "https://petstore.swagger.io/v2"
+    enable_rbac: true
+    performance_threshold: 1000
 
 security:
   adapter: "openai"
